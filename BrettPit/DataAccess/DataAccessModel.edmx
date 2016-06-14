@@ -1,0 +1,558 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="BrettPit.DataAccess.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="eloes">
+          <Key>
+            <PropertyRef Name="uid" />
+          </Key>
+          <Property Name="uid" Type="int" Nullable="false" />
+          <Property Name="gid" Type="int" Nullable="false" />
+          <Property Name="elo" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="game_systems">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="name" Type="varchar" MaxLength="255" />
+          <Property Name="description" Type="varchar" MaxLength="255" />
+        </EntityType>
+        <EntityType Name="log_admin">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="timestamp" Type="datetime" Nullable="false" />
+          <Property Name="uid_affected" Type="int" Nullable="false" />
+          <Property Name="uid_performed" Type="int" Nullable="false" />
+          <Property Name="changed_from" Type="varchar" MaxLength="255" Nullable="false" />
+          <Property Name="changed_to" Type="varchar" MaxLength="255" Nullable="false" />
+        </EntityType>
+        <EntityType Name="log_pwchange">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="timestamp" Type="datetime" Nullable="false" />
+          <Property Name="uid_" Type="int" Nullable="false" />
+          <Property Name="admin_id" Type="int" Nullable="false" />
+          <Property Name="pw_old" Type="varchar" MaxLength="255" Nullable="false" />
+          <Property Name="pw_new" Type="varchar" MaxLength="255" Nullable="false" />
+        </EntityType>
+        <EntityType Name="pairings">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="timestamp" Type="datetime" Nullable="false" />
+          <Property Name="uid1" Type="int" Nullable="false" />
+          <Property Name="status1" Type="int" Nullable="false" />
+          <Property Name="uid2" Type="int" Nullable="false" />
+          <Property Name="status2" Type="int" Nullable="false" />
+          <Property Name="game_system_id" Type="int" Nullable="false" />
+          <Property Name="result" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="users">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="name" Type="varchar" MaxLength="255" Nullable="false" />
+          <Property Name="password" Type="varchar" MaxLength="255" Nullable="false" />
+          <Property Name="email" Type="varchar" MaxLength="255" Nullable="false" />
+          <Property Name="isadmin" Type="bit" Nullable="false" />
+          <Property Name="last_login" Type="datetime" Nullable="false" />
+          <Property Name="loginid" Type="varchar" MaxLength="255" Nullable="false" />
+        </EntityType>
+        <Association Name="FK__elo__gid__1DE57479">
+          <End Role="game_systems" Type="Self.game_systems" Multiplicity="1" />
+          <End Role="eloes" Type="Self.eloes" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="game_systems">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="eloes">
+              <PropertyRef Name="gid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__elo__uid__1CF15040">
+          <End Role="users" Type="Self.users" Multiplicity="1" />
+          <End Role="eloes" Type="Self.eloes" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="users">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="eloes">
+              <PropertyRef Name="uid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__log_admin__uid_a__20C1E124">
+          <End Role="users" Type="Self.users" Multiplicity="1" />
+          <End Role="log_admin" Type="Self.log_admin" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="users">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="log_admin">
+              <PropertyRef Name="uid_affected" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__log_admin__uid_p__21B6055D">
+          <End Role="users" Type="Self.users" Multiplicity="1" />
+          <End Role="log_admin" Type="Self.log_admin" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="users">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="log_admin">
+              <PropertyRef Name="uid_performed" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__log_pwcha__admin__24927208">
+          <End Role="users" Type="Self.users" Multiplicity="1" />
+          <End Role="log_pwchange" Type="Self.log_pwchange" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="users">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="log_pwchange">
+              <PropertyRef Name="admin_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__log_pwchan__uid___239E4DCF">
+          <End Role="users" Type="Self.users" Multiplicity="1" />
+          <End Role="log_pwchange" Type="Self.log_pwchange" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="users">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="log_pwchange">
+              <PropertyRef Name="uid_" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__pairings__game_s__164452B1">
+          <End Role="game_systems" Type="Self.game_systems" Multiplicity="1" />
+          <End Role="pairings" Type="Self.pairings" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="game_systems">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="pairings">
+              <PropertyRef Name="game_system_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__pairings__uid1__145C0A3F">
+          <End Role="users" Type="Self.users" Multiplicity="1" />
+          <End Role="pairings" Type="Self.pairings" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="users">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="pairings">
+              <PropertyRef Name="uid1" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__pairings__uid2__15502E78">
+          <End Role="users" Type="Self.users" Multiplicity="1" />
+          <End Role="pairings" Type="Self.pairings" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="users">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="pairings">
+              <PropertyRef Name="uid2" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="BrettPitDataAccessStoreContainer">
+          <EntitySet Name="eloes" EntityType="Self.eloes" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="game_systems" EntityType="Self.game_systems" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="log_admin" EntityType="Self.log_admin" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="log_pwchange" EntityType="Self.log_pwchange" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="pairings" EntityType="Self.pairings" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="users" EntityType="Self.users" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK__elo__gid__1DE57479" Association="Self.FK__elo__gid__1DE57479">
+            <End Role="game_systems" EntitySet="game_systems" />
+            <End Role="eloes" EntitySet="eloes" />
+          </AssociationSet>
+          <AssociationSet Name="FK__elo__uid__1CF15040" Association="Self.FK__elo__uid__1CF15040">
+            <End Role="users" EntitySet="users" />
+            <End Role="eloes" EntitySet="eloes" />
+          </AssociationSet>
+          <AssociationSet Name="FK__log_admin__uid_a__20C1E124" Association="Self.FK__log_admin__uid_a__20C1E124">
+            <End Role="users" EntitySet="users" />
+            <End Role="log_admin" EntitySet="log_admin" />
+          </AssociationSet>
+          <AssociationSet Name="FK__log_admin__uid_p__21B6055D" Association="Self.FK__log_admin__uid_p__21B6055D">
+            <End Role="users" EntitySet="users" />
+            <End Role="log_admin" EntitySet="log_admin" />
+          </AssociationSet>
+          <AssociationSet Name="FK__log_pwcha__admin__24927208" Association="Self.FK__log_pwcha__admin__24927208">
+            <End Role="users" EntitySet="users" />
+            <End Role="log_pwchange" EntitySet="log_pwchange" />
+          </AssociationSet>
+          <AssociationSet Name="FK__log_pwchan__uid___239E4DCF" Association="Self.FK__log_pwchan__uid___239E4DCF">
+            <End Role="users" EntitySet="users" />
+            <End Role="log_pwchange" EntitySet="log_pwchange" />
+          </AssociationSet>
+          <AssociationSet Name="FK__pairings__game_s__164452B1" Association="Self.FK__pairings__game_s__164452B1">
+            <End Role="game_systems" EntitySet="game_systems" />
+            <End Role="pairings" EntitySet="pairings" />
+          </AssociationSet>
+          <AssociationSet Name="FK__pairings__uid1__145C0A3F" Association="Self.FK__pairings__uid1__145C0A3F">
+            <End Role="users" EntitySet="users" />
+            <End Role="pairings" EntitySet="pairings" />
+          </AssociationSet>
+          <AssociationSet Name="FK__pairings__uid2__15502E78" Association="Self.FK__pairings__uid2__15502E78">
+            <End Role="users" EntitySet="users" />
+            <End Role="pairings" EntitySet="pairings" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="BrettPit.DataAccess" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="eloes">
+          <Key>
+            <PropertyRef Name="uid" />
+          </Key>
+          <Property Name="uid" Type="Int32" Nullable="false" />
+          <Property Name="gid" Type="Int32" Nullable="false" />
+          <Property Name="elo" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="game_systems" Relationship="Self.FK__elo__gid__1DE57479" FromRole="eloes" ToRole="game_systems" />
+          <NavigationProperty Name="users" Relationship="Self.FK__elo__uid__1CF15040" FromRole="eloes" ToRole="users" />
+        </EntityType>
+        <EntityType Name="game_systems">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="name" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="description" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="eloes" Relationship="Self.FK__elo__gid__1DE57479" FromRole="game_systems" ToRole="eloes" />
+          <NavigationProperty Name="pairings" Relationship="Self.FK__pairings__game_s__164452B1" FromRole="game_systems" ToRole="pairings" />
+        </EntityType>
+        <EntityType Name="log_admin">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="timestamp" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="uid_affected" Type="Int32" Nullable="false" />
+          <Property Name="uid_performed" Type="Int32" Nullable="false" />
+          <Property Name="changed_from" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="changed_to" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="users" Relationship="Self.FK__log_admin__uid_a__20C1E124" FromRole="log_admin" ToRole="users" />
+          <NavigationProperty Name="users1" Relationship="Self.FK__log_admin__uid_p__21B6055D" FromRole="log_admin" ToRole="users" />
+        </EntityType>
+        <EntityType Name="log_pwchange">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="timestamp" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="uid_" Type="Int32" Nullable="false" />
+          <Property Name="admin_id" Type="Int32" Nullable="false" />
+          <Property Name="pw_old" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="pw_new" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="users" Relationship="Self.FK__log_pwcha__admin__24927208" FromRole="log_pwchange" ToRole="users" />
+          <NavigationProperty Name="users1" Relationship="Self.FK__log_pwchan__uid___239E4DCF" FromRole="log_pwchange" ToRole="users" />
+        </EntityType>
+        <EntityType Name="pairings">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="timestamp" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="uid1" Type="Int32" Nullable="false" />
+          <Property Name="status1" Type="Int32" Nullable="false" />
+          <Property Name="uid2" Type="Int32" Nullable="false" />
+          <Property Name="status2" Type="Int32" Nullable="false" />
+          <Property Name="game_system_id" Type="Int32" Nullable="false" />
+          <Property Name="result" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="game_systems" Relationship="Self.FK__pairings__game_s__164452B1" FromRole="pairings" ToRole="game_systems" />
+          <NavigationProperty Name="users" Relationship="Self.FK__pairings__uid1__145C0A3F" FromRole="pairings" ToRole="users" />
+          <NavigationProperty Name="users1" Relationship="Self.FK__pairings__uid2__15502E78" FromRole="pairings" ToRole="users" />
+        </EntityType>
+        <EntityType Name="users">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="name" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="password" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="email" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="isadmin" Type="Boolean" Nullable="false" />
+          <Property Name="last_login" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="eloes" Relationship="Self.FK__elo__uid__1CF15040" FromRole="users" ToRole="eloes" />
+          <NavigationProperty Name="log_admin" Relationship="Self.FK__log_admin__uid_a__20C1E124" FromRole="users" ToRole="log_admin" />
+          <NavigationProperty Name="log_admin1" Relationship="Self.FK__log_admin__uid_p__21B6055D" FromRole="users" ToRole="log_admin" />
+          <NavigationProperty Name="log_pwchange" Relationship="Self.FK__log_pwcha__admin__24927208" FromRole="users" ToRole="log_pwchange" />
+          <NavigationProperty Name="log_pwchange1" Relationship="Self.FK__log_pwchan__uid___239E4DCF" FromRole="users" ToRole="log_pwchange" />
+          <NavigationProperty Name="pairings" Relationship="Self.FK__pairings__uid1__145C0A3F" FromRole="users" ToRole="pairings" />
+          <NavigationProperty Name="pairings1" Relationship="Self.FK__pairings__uid2__15502E78" FromRole="users" ToRole="pairings" />
+          <Property Name="loginid" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <Association Name="FK__elo__gid__1DE57479">
+          <End Role="game_systems" Type="Self.game_systems" Multiplicity="1" />
+          <End Role="eloes" Type="Self.eloes" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="game_systems">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="eloes">
+              <PropertyRef Name="gid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__elo__uid__1CF15040">
+          <End Role="users" Type="Self.users" Multiplicity="1" />
+          <End Role="eloes" Type="Self.eloes" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="users">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="eloes">
+              <PropertyRef Name="uid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__pairings__game_s__164452B1">
+          <End Role="game_systems" Type="Self.game_systems" Multiplicity="1" />
+          <End Role="pairings" Type="Self.pairings" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="game_systems">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="pairings">
+              <PropertyRef Name="game_system_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__log_admin__uid_a__20C1E124">
+          <End Role="users" Type="Self.users" Multiplicity="1" />
+          <End Role="log_admin" Type="Self.log_admin" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="users">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="log_admin">
+              <PropertyRef Name="uid_affected" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__log_admin__uid_p__21B6055D">
+          <End Role="users" Type="Self.users" Multiplicity="1" />
+          <End Role="log_admin" Type="Self.log_admin" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="users">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="log_admin">
+              <PropertyRef Name="uid_performed" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__log_pwcha__admin__24927208">
+          <End Role="users" Type="Self.users" Multiplicity="1" />
+          <End Role="log_pwchange" Type="Self.log_pwchange" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="users">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="log_pwchange">
+              <PropertyRef Name="admin_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__log_pwchan__uid___239E4DCF">
+          <End Role="users" Type="Self.users" Multiplicity="1" />
+          <End Role="log_pwchange" Type="Self.log_pwchange" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="users">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="log_pwchange">
+              <PropertyRef Name="uid_" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__pairings__uid1__145C0A3F">
+          <End Role="users" Type="Self.users" Multiplicity="1" />
+          <End Role="pairings" Type="Self.pairings" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="users">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="pairings">
+              <PropertyRef Name="uid1" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__pairings__uid2__15502E78">
+          <End Role="users" Type="Self.users" Multiplicity="1" />
+          <End Role="pairings" Type="Self.pairings" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="users">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="pairings">
+              <PropertyRef Name="uid2" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="DataAccessContext" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="eloes" EntityType="Self.eloes" />
+          <EntitySet Name="game_systems" EntityType="Self.game_systems" />
+          <EntitySet Name="log_admin" EntityType="Self.log_admin" />
+          <EntitySet Name="log_pwchange" EntityType="Self.log_pwchange" />
+          <EntitySet Name="pairings" EntityType="Self.pairings" />
+          <EntitySet Name="users" EntityType="Self.users" />
+          <AssociationSet Name="FK__elo__gid__1DE57479" Association="Self.FK__elo__gid__1DE57479">
+            <End Role="game_systems" EntitySet="game_systems" />
+            <End Role="eloes" EntitySet="eloes" />
+          </AssociationSet>
+          <AssociationSet Name="FK__elo__uid__1CF15040" Association="Self.FK__elo__uid__1CF15040">
+            <End Role="users" EntitySet="users" />
+            <End Role="eloes" EntitySet="eloes" />
+          </AssociationSet>
+          <AssociationSet Name="FK__pairings__game_s__164452B1" Association="Self.FK__pairings__game_s__164452B1">
+            <End Role="game_systems" EntitySet="game_systems" />
+            <End Role="pairings" EntitySet="pairings" />
+          </AssociationSet>
+          <AssociationSet Name="FK__log_admin__uid_a__20C1E124" Association="Self.FK__log_admin__uid_a__20C1E124">
+            <End Role="users" EntitySet="users" />
+            <End Role="log_admin" EntitySet="log_admin" />
+          </AssociationSet>
+          <AssociationSet Name="FK__log_admin__uid_p__21B6055D" Association="Self.FK__log_admin__uid_p__21B6055D">
+            <End Role="users" EntitySet="users" />
+            <End Role="log_admin" EntitySet="log_admin" />
+          </AssociationSet>
+          <AssociationSet Name="FK__log_pwcha__admin__24927208" Association="Self.FK__log_pwcha__admin__24927208">
+            <End Role="users" EntitySet="users" />
+            <End Role="log_pwchange" EntitySet="log_pwchange" />
+          </AssociationSet>
+          <AssociationSet Name="FK__log_pwchan__uid___239E4DCF" Association="Self.FK__log_pwchan__uid___239E4DCF">
+            <End Role="users" EntitySet="users" />
+            <End Role="log_pwchange" EntitySet="log_pwchange" />
+          </AssociationSet>
+          <AssociationSet Name="FK__pairings__uid1__145C0A3F" Association="Self.FK__pairings__uid1__145C0A3F">
+            <End Role="users" EntitySet="users" />
+            <End Role="pairings" EntitySet="pairings" />
+          </AssociationSet>
+          <AssociationSet Name="FK__pairings__uid2__15502E78" Association="Self.FK__pairings__uid2__15502E78">
+            <End Role="users" EntitySet="users" />
+            <End Role="pairings" EntitySet="pairings" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="BrettPitDataAccessStoreContainer" CdmEntityContainer="DataAccessContext">
+          <EntitySetMapping Name="eloes">
+            <EntityTypeMapping TypeName="BrettPit.DataAccess.eloes">
+              <MappingFragment StoreEntitySet="eloes">
+                <ScalarProperty Name="uid" ColumnName="uid" />
+                <ScalarProperty Name="gid" ColumnName="gid" />
+                <ScalarProperty Name="elo" ColumnName="elo" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="game_systems">
+            <EntityTypeMapping TypeName="BrettPit.DataAccess.game_systems">
+              <MappingFragment StoreEntitySet="game_systems">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="description" ColumnName="description" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="log_admin">
+            <EntityTypeMapping TypeName="BrettPit.DataAccess.log_admin">
+              <MappingFragment StoreEntitySet="log_admin">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="timestamp" ColumnName="timestamp" />
+                <ScalarProperty Name="uid_affected" ColumnName="uid_affected" />
+                <ScalarProperty Name="uid_performed" ColumnName="uid_performed" />
+                <ScalarProperty Name="changed_from" ColumnName="changed_from" />
+                <ScalarProperty Name="changed_to" ColumnName="changed_to" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="log_pwchange">
+            <EntityTypeMapping TypeName="BrettPit.DataAccess.log_pwchange">
+              <MappingFragment StoreEntitySet="log_pwchange">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="timestamp" ColumnName="timestamp" />
+                <ScalarProperty Name="uid_" ColumnName="uid_" />
+                <ScalarProperty Name="admin_id" ColumnName="admin_id" />
+                <ScalarProperty Name="pw_old" ColumnName="pw_old" />
+                <ScalarProperty Name="pw_new" ColumnName="pw_new" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="pairings">
+            <EntityTypeMapping TypeName="BrettPit.DataAccess.pairings">
+              <MappingFragment StoreEntitySet="pairings">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="timestamp" ColumnName="timestamp" />
+                <ScalarProperty Name="uid1" ColumnName="uid1" />
+                <ScalarProperty Name="status1" ColumnName="status1" />
+                <ScalarProperty Name="uid2" ColumnName="uid2" />
+                <ScalarProperty Name="status2" ColumnName="status2" />
+                <ScalarProperty Name="game_system_id" ColumnName="game_system_id" />
+                <ScalarProperty Name="result" ColumnName="result" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="users">
+            <EntityTypeMapping TypeName="BrettPit.DataAccess.users">
+              <MappingFragment StoreEntitySet="users">
+                <ScalarProperty Name="loginid" ColumnName="loginid" />
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="password" ColumnName="password" />
+                <ScalarProperty Name="email" ColumnName="email" />
+                <ScalarProperty Name="isadmin" ColumnName="isadmin" />
+                <ScalarProperty Name="last_login" ColumnName="last_login" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

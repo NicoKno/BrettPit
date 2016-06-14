@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="3f7ff49d414b44288ea7fd3b13d59ba6" Name="Diagram1">
+        <EntityTypeShape EntityType="BrettPit.DataAccess.eloes" Width="1.5" PointX="3" PointY="4.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="BrettPit.DataAccess.game_systems" Width="1.5" PointX="0.75" PointY="2.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="BrettPit.DataAccess.log_admin" Width="1.5" PointX="3" PointY="7.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="BrettPit.DataAccess.log_pwchange" Width="1.5" PointX="3" PointY="10.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="BrettPit.DataAccess.pairings" Width="1.5" PointX="6" PointY="6.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="BrettPit.DataAccess.users" Width="1.5" PointX="0.75" PointY="5.875" IsExpanded="true" />
+        <AssociationConnector Association="BrettPit.DataAccess.FK__elo__gid__1DE57479" ManuallyRouted="false" />
+        <AssociationConnector Association="BrettPit.DataAccess.FK__elo__uid__1CF15040" ManuallyRouted="false" />
+        <AssociationConnector Association="BrettPit.DataAccess.FK__pairings__game_s__164452B1" ManuallyRouted="false" />
+        <AssociationConnector Association="BrettPit.DataAccess.FK__log_admin__uid_a__20C1E124" ManuallyRouted="false" />
+        <AssociationConnector Association="BrettPit.DataAccess.FK__log_admin__uid_p__21B6055D" ManuallyRouted="false" />
+        <AssociationConnector Association="BrettPit.DataAccess.FK__log_pwcha__admin__24927208" ManuallyRouted="false" />
+        <AssociationConnector Association="BrettPit.DataAccess.FK__log_pwchan__uid___239E4DCF" ManuallyRouted="false" />
+        <AssociationConnector Association="BrettPit.DataAccess.FK__pairings__uid1__145C0A3F" ManuallyRouted="false" />
+        <AssociationConnector Association="BrettPit.DataAccess.FK__pairings__uid2__15502E78" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>
