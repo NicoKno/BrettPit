@@ -29,6 +29,7 @@ namespace BrettPit.Controller
             var username = (string)Request.Form.Username;
             var password = (string)Request.Form.Password;
 
+            // check if user exists and password matches
             var userGuid = UserMapper.ValidateUser(username, password.CalculateMd5Hash());
             
             if (userGuid == null)
