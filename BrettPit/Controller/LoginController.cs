@@ -37,6 +37,7 @@ namespace BrettPit.Controller
                 return Context.GetRedirect("~/login?error=true&username=" + (string)Request.Form.Username);
             }
 
+            // check if user wants to be remembered
             DateTime? expiry = null;
             if (Request.Form.RememberMe.HasValue)
             {
