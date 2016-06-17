@@ -25,7 +25,7 @@ namespace BrettPit
 
         protected override void RequestStartup(TinyIoCContainer container, IPipelines pipelines, NancyContext context)
         {
-            //base.RequestStartup(container, pipelines, context);
+            base.RequestStartup(container, pipelines, context);
             FormsAuthentication.Enable(pipelines, new FormsAuthenticationConfiguration
             {
                 RedirectUrl = "/login",

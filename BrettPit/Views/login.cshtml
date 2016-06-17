@@ -16,9 +16,37 @@
             <input type="submit" value="Login" />
         </form>
     </div>
-@if (Model.Errored)
-{
-    <div id="errorBox" class="floatingError">Invalid Username or Password</div>
-}
+    @if (Model.Errored)
+    {
+        <div id="errorBox" class="floatingError">Invalid Username or Password</div>
+    }
+
+    <div>
+        <form method="POST" action="">
+            Username <input name="Username" type="text" />
+            <br />
+            Email <input name="Email" type="email" />
+            <br />
+            Password <input name="Password" type="password" />
+            <br />
+            Repeat <input name="Repeat" type="password" />
+            <br />
+            <input type="submit" value="Register" formaction="/register" />
+        </form>
+    </div>
+
+    @if (Model.RegisterErrored)
+    {
+        <div id="registerErrorBox" class="floatingError">
+            Registration failed. Please note the following:
+            <ul>
+                <li>Type in a valid user name</li>
+                <li>Type in a valid email</li>
+                <li>The two password strings must match</li>
+            </ul>
+        </div>
+    }
+
+
 </body>
 </html>

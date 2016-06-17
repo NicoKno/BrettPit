@@ -15,7 +15,7 @@ namespace BrettPit.BusinessLogic
             using (var db = new DataAccessContext())
             {
                 var dbUser = db.users.FirstOrDefault(user => string.Equals(user.loginid, loginId));
-
+                
                 if (dbUser != null)
                 {
                     resultUser = new UserModel
@@ -90,7 +90,8 @@ namespace BrettPit.BusinessLogic
                         email = user.Email,
                         isadmin = user.IsAdmin,
                         password = user.Password.CalculateMd5Hash(),
-                        loginid = Guid.NewGuid().ToString("N")
+                        loginid = user.LoginGuid.ToString("N"),
+                        last_login = DateTime.Now
                     };
                     db.users.Add(newUser);
                     db.SaveChanges();

@@ -14,12 +14,36 @@ namespace BrettPit.Controller
             Get["/login"] = GetLoginView;
             Post["/login"] = Login;
             Get["/logout"] = LogOut;
+            Post["/register"] = RegisterUser;
+        }
+
+        private object RegisterUser(object arg)
+        {
+            var username = (string) Request.Form.Username;
+            var password = (string) Request.Form.Password;
+            var repeat = (string) Request.Form.Repeat;
+            var email = (string) Request.Form.Email;
+
+            if (string.IsNullOrEmpty(username) || string.IsNullOrEmpty(email) || password != repeat)
+            {
+                return Context.GetRedirect("~/login?repeatError=true");
+            }
+
+            var userGuid = UserMapper.CreateUser(username, password, email);
+
+            if (userGuid == null)
+            {
+                return Context.GetRedirect("~/login?error=true&username=" + (string)Request.Form.Username);
+            }
+
+            return this.LoginAndRedirect(userGuid.Value, fallbackRedirectUrl:"/games");
         }
 
         private dynamic GetLoginView(dynamic parameters)
         {
             dynamic model = new ExpandoObject();
             model.Errored = Request.Query.error.HasValue;
+            model.RegisterErrored = Request.Query.repeatError.HasValue;
 
             return View["login", model];
         }
@@ -49,7 +73,7 @@ namespace BrettPit.Controller
 
         private dynamic LogOut(dynamic arg)
         {
-            return this.LogoutAndRedirect("~/");
+            return this.LogoutAndRedirect("~/games");
         }
 
 

@@ -30,5 +30,20 @@ namespace BrettPit
 
             return userRecord.LoginGuid;
         }
+
+        public static Guid? CreateUser(string username, string password, string email)
+        {
+            var newUser = new UserModel
+            {
+                Username = username,
+                Email = email,
+                IsAdmin = false,
+                Password = password,
+                LoginGuid = Guid.NewGuid()
+            };
+            var user = UserSetting.Save(newUser);
+
+            return newUser.LoginGuid;
+        }
     }
 }
