@@ -5,6 +5,7 @@ using System.Web;
 using Nancy;
 using Nancy.Authentication.Forms;
 using Nancy.Bootstrapper;
+using Nancy.Conventions;
 using Nancy.TinyIoc;
 
 namespace BrettPit
@@ -32,5 +33,11 @@ namespace BrettPit
                 UserMapper = container.Resolve<IUserMapper>()
             });
         }
+
+        //protected override void ConfigureConventions(NancyConventions nancyConventions)
+        //{
+        //    nancyConventions.StaticContentsConventions.Add(StaticContentConventionBuilder.AddDirectory("Styles", @"Styles"));
+        //    base.ConfigureConventions(nancyConventions);
+        //}
     }
 }
