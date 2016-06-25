@@ -2,66 +2,83 @@
 <html>
 <head>
     <meta name="viewport" content="width=device-width" />
+    <link href="~/Content/site.css" rel="stylesheet" type="text/css" />
+
     <title>Login</title>
     @inherits Nancy.ViewEngines.Razor.NancyRazorViewBase<dynamic>
 </head>
 <body>
-    <div>
-        @if(@Html.IsAuthenticated)
-        {
-            <div>Bereits eingelogt als @Html.CurrentUser.UserName</div>
-            <div><br />email: @Model.Email</div>
-        }
-        else
-        {
-            <div>Bitte einloggen</div>
-        }
-    </div>
-    <br />
-    <br />
-    <br />
-    <div>
-        <form method="POST">
-            Username <input name="Username" type="text" />
+    <div class="brettpit-content-container">
+        <div class="brettpit-form-area">
+            <div>
+                @if(@Html.IsAuthenticated)
+                {
+                <div>Bereits eingelogt als @Html.CurrentUser.UserName</div>
+                <div><br />email: @Model.Email</div>
+                }
+                else
+                {
+                <div>Bitte einloggen</div>
+                }
+            </div>
             <br />
-            Password <input name="Password" type="password" />
             <br />
-            Remember Me <input name="RememberMe" type="checkbox" value="True" />
             <br />
-            <input type="submit" value="Login" />
-        </form>
-    </div>
-    @if (Model.Errored)
-    {
-        <div id="errorBox" class="floatingError">Invalid Username or Password</div>
-    }
+            <div>
+                <div>
+                    <form method="POST">
+                        <span class="brettpit-text">Username</span>
+                        <input class="brettpit-textbox" name="Username" type="text" />
+                        <br />
+                        <span class="brettpit-text">Password</span>
+                        <input class="brettpit-textbox" name="Password" type="password" />
+                        <br />
+                        <span class="brettpit-text">Remember Me</span>
+                        <input name="RememberMe" type="checkbox" value="True" />
+                        <br />
+                        <input type="submit" value="Login" />
+                    </form>
+                </div>
+                @if (Model.Errored)
+                {
+                <div id="errorBox" class="floatingError">Invalid Username or Password</div>
+                }
 
-    <div>
-        <form method="POST" action="">
-            Username <input name="Username" type="text" />
-            <br />
-            Email <input name="Email" type="email" />
-            <br />
-            Password <input name="Password" type="password" />
-            <br />
-            Repeat <input name="Repeat" type="password" />
-            <br />
-            <input type="submit" value="Register" formaction="/register" />
-        </form>
-    </div>
+                <div>
+                    <form method="POST" action="">
+                        <span class="brettpit-text">Username</span>
+                        <input class="brettpit-textbox" name="Username" type="text" />
+                        <br />
+                        <span class="brettpit-text">Email</span>
+                        <input class="brettpit-textbox" name="Email" type="email" />
+                        <br />
+                        <span class="brettpit-text">Password</span>
+                        <input class="brettpit-textbox" name="Password" type="password" />
+                        <br />
+                        <span class="brettpit-text">Repeat</span>
+                        <input class="brettpit-textbox" name="Repeat" type="password" />
+                        <br />
+                        <input type="submit" value="Register" formaction="/register" />
+                    </form>
+                </div>
 
-    @if (Model.RegisterErrored)
-    {
-        <div id="registerErrorBox" class="floatingError">
-            Registration failed. Please note the following:
-            <ul>
-                <li>Type in a valid user name</li>
-                <li>Type in a valid email</li>
-                <li>The two password strings must match</li>
-            </ul>
+                @if (Model.RegisterErrored)
+                {
+                <div id="registerErrorBox" class="floatingError">
+                    Registration failed. Please note the following:
+                    <ul>
+                        <li>Type in a valid user name</li>
+                        <li>Type in a valid email</li>
+                        <li>The two password strings must match</li>
+                    </ul>
+                </div>
+                }
+            </div>
+        <div class="brettpit-vertical-line"></div>
+        <div class="brettpit-text-area">
+            Get the most out of your tabletops
         </div>
-    }
-
+    </div>
 
 </body>
 </html>

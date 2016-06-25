@@ -125,6 +125,7 @@
     <Content Include="DataAccess\DataAccessModel.edmx.diagram">
       <DependentUpon>DataAccessModel.edmx</DependentUpon>
     </Content>
+    <Content Include="Content\site.css" />
     <Content Include="Views\login.cshtml" />
     <Content Include="Views\games.cshtml" />
     <None Include="Web.Debug.config">

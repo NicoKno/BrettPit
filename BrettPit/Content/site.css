@@ -1,0 +1,41 @@
+﻿body {
+    background-color: #E5E5E5;
+}
+
+.brettpit-textbox {
+    background: transparent;
+    border: 1px solid #575757;
+    outline: 0;
+    height: 25px;
+}
+
+.brettpit-text {
+    font-family: "Open Sans";
+    font-style: normal;
+    font-size: 15px;
+}
+
+.brettpit-content-container {
+    overflow: hidden;
+    background-color: #ffffff;
+    position: relative;
+}
+
+.brettpit-text-area {
+    float: left;
+    width: 50%;
+    text-align: center;
+}
+
+.brettpit-vertical-line {
+    border-right: 1px solid #575757;
+    position: absolute;
+    left: 50%;
+    top: 5%;
+    bottom: 5%;
+}
+
+.brettpit-form-area {
+    float: right;
+    width: 50%;
+}
