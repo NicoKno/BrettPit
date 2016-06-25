@@ -7,7 +7,18 @@
 </head>
 <body>
     <div>
-        Games here<br/>
+        @if (@Html.IsAuthenticated)
+        {
+            <div>Bereits eingelogt als @Html.CurrentUser.UserName</div>
+            <div><br />email: @Model.Email</div>
+        }
+        else
+        {
+            <div>Bitte einloggen</div>
+        }
+    </div>
+    <div>
+        Games here<br />
 
         First Game: @Model.game<br /><br />
         all Games: <br />
@@ -24,8 +35,6 @@
                 </tr>
             }
         </table>
-       
-            
     </div>
 </body>
 </html>

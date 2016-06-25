@@ -116,6 +116,7 @@
     <Reference Include="System.EnterpriseServices" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Content\Images\brettpit_logo2_big.png" />
     <Content Include="DataAccess\DataAccessModel.edmx.sql" />
     <Content Include="packages.config" />
     <EntityDeploy Include="DataAccess\DataAccessModel.edmx">
@@ -125,7 +126,7 @@
     <Content Include="DataAccess\DataAccessModel.edmx.diagram">
       <DependentUpon>DataAccessModel.edmx</DependentUpon>
     </Content>
-    <Content Include="Content\site.css" />
+    <Content Include="Content\Styles\site.css" />
     <Content Include="Views\login.cshtml" />
     <Content Include="Views\games.cshtml" />
     <None Include="Web.Debug.config">

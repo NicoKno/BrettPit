@@ -1,10 +1,8 @@
 ﻿using Nancy;
 using Nancy.Security;
 using BrettPit.BusinessLogic;
-using System;
 using System.Dynamic;
-using Nancy.Authentication.Forms;
-using Nancy.Extensions;
+using System.Linq;
 
 namespace BrettPit.Controller
 {
@@ -24,11 +22,19 @@ namespace BrettPit.Controller
             model.RegisterErrored = Request.Query.repeatError.HasValue;
 
             var gameRecord = GameSetting.Get(1);
-            model.game = gameRecord.Name;
+            if (gameRecord != null)
+            {
+                model.game = gameRecord.Name;
+            }
 
             var gamesRecord = GamesSetting.GetAll();
-            model.games = gamesRecord.Games[0].name;
-            model.gamelist = gamesRecord.Games;
+
+            if (gamesRecord != null && gamesRecord.Games.Any())
+            {
+                model.games = gamesRecord.Games[0].name;
+                model.gamelist = gamesRecord.Games;
+            }
+
             return View["games", model];
         }
     }
