@@ -44,7 +44,7 @@ namespace BrettPit.Controller
             dynamic model = new ExpandoObject();
             model.Errored = Request.Query.error.HasValue;
             model.RegisterErrored = Request.Query.repeatError.HasValue;
-
+            model.Email = "geht@imail.com";
             return View["login", model];
         }
 

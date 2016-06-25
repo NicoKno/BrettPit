@@ -1,12 +1,31 @@
 ﻿<!DOCTYPE html>
-
 <html>
 <head>
+    <meta name="viewport" content="width=device-width" />
     <title>Games</title>
+    @inherits Nancy.ViewEngines.Razor.NancyRazorViewBase<dynamic>
 </head>
 <body>
-<div>
-      Games here
-</div>
+    <div>
+        Games here<br/>
+
+        First Game: @Model.game<br /><br />
+        all Games: <br />
+        <table>
+            @foreach (var item in Model.gamelist)
+            {
+                <tr>
+                    <td>
+                        @item.name
+                    </td>
+                    <td>
+                        @item.description
+                    </td>
+                </tr>
+            }
+        </table>
+       
+            
+    </div>
 </body>
 </html>
