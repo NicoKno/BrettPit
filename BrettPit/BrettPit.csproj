@@ -116,6 +116,7 @@
     <Reference Include="System.EnterpriseServices" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="DataAccess\DataAccessModel.edmx.sql" />
     <Content Include="packages.config" />
     <EntityDeploy Include="DataAccess\DataAccessModel.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
@@ -149,6 +150,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BusinessLogic\EncryptionUtil.cs" />
+    <Compile Include="BusinessLogic\GamesSettings.cs" />
+    <Compile Include="Models\GameModel.cs" />
+    <Compile Include="BusinessLogic\GameSettings.cs" />
     <Compile Include="BusinessLogic\UserSetting.cs" />
     <Compile Include="Controller\GameController.cs" />
     <Compile Include="Controller\LoginController.cs" />
@@ -179,6 +183,7 @@
     <Compile Include="DataAccess\log_pwchange.cs">
       <DependentUpon>DataAccessModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\GamesModel.cs" />
     <Compile Include="Models\UserIdentity.cs" />
     <Compile Include="DataAccess\pairings.cs">
       <DependentUpon>DataAccessModel.tt</DependentUpon>
