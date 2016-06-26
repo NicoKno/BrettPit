@@ -29,6 +29,7 @@ namespace BrettPit.Controller
             var gamesRecord = GamesSetting.GetAll();
             model.games = gamesRecord.Games[0].name;
             model.gamelist = gamesRecord.Games;
+            model.filter = true;
             return View["games", model];
         }
     }
