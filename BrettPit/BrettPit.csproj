@@ -117,6 +117,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\Images\brettpit_logo2_big.png" />
+    <Content Include="Content\Styles\login.css" />
     <Content Include="DataAccess\DataAccessModel.edmx.sql" />
     <Content Include="packages.config" />
     <EntityDeploy Include="DataAccess\DataAccessModel.edmx">
