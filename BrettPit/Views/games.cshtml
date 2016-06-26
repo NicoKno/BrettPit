@@ -4,6 +4,12 @@
     <meta name="viewport" content="width=device-width" />
     <title>Games</title>
     @inherits Nancy.ViewEngines.Razor.NancyRazorViewBase<dynamic>
+        <script>
+            function reloadPage()
+            {
+                location.reload();
+            }
+        </script>
 </head>
 <body>
     <div>
@@ -22,17 +28,47 @@
 
         First Game: @Model.game<br /><br />
         all Games: <br />
-        <table>
-            @foreach (var item in Model.gamelist)
+        <table border="1">
+            <tr>
+                <td align="right" colspan="3">
+                    <input name="GamesFilter" type="checkbox" checked="@Model.filter" value="@Model.filter" onclick="reloadPage()" />Show my games only
+                </td>
+            </tr>
+            @if(Model.filter)
             {
-                <tr>
-                    <td>
-                        @item.name
-                    </td>
-                    <td>
-                        @item.description
-                    </td>
-                </tr>
+                @foreach (var item in Model.gamelist)
+                {
+
+                    <tr>
+                        <td width=0%>
+                            @item.id
+                        </td>
+                        <td width=30%>
+                            @item.name
+                        </td>
+                        <td width=70%>
+                            @item.description
+                        </td>
+                    </tr>
+                }
+            }
+            else
+            {
+                @foreach (var item in Model.gamelist)
+                {
+
+                    <tr>
+                        <td width=0%>
+                            @item.id
+                        </td>
+                        <td width=70%>
+                            @item.name
+                        </td>
+                        <td width=30%>
+                            @item.description
+                        </td>
+                    </tr>
+                }
             }
         </table>
     </div>
