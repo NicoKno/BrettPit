@@ -79,5 +79,19 @@ namespace BrettPit.BusinessLogic
                 return dbGames;
             }
         }
+
+        public static IEnumerable<UserScoreModel> GetScoreForAllUsers(int gameId)
+        {
+            using (var db = new DataAccessContext())
+            {
+                var dbUserScores = db.eloes.Where(elo => elo.game_systems.id == gameId).Select(elo => new UserScoreModel
+                {
+                    Username = elo.users.name,
+                    Score = elo.elo
+                });
+
+                return dbUserScores.ToList();
+            }
+        }
     }
 }

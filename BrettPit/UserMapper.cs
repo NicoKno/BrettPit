@@ -13,15 +13,7 @@ namespace BrettPit
         {
             var userRecord = UserSetting.Get(identifier.ToString("N"));
 
-            if (userRecord == null)
-            {
-                return null;
-            }
-
-            return new UserIdentity
-                       {
-                           UserName = userRecord.Username
-                       };
+            return userRecord;
         }
 
         public static Guid? ValidateUser(string username, string password)
@@ -35,7 +27,7 @@ namespace BrettPit
         {
             var newUser = new UserModel
             {
-                Username = username,
+                UserName = username,
                 Email = email,
                 IsAdmin = false,
                 Password = password,
