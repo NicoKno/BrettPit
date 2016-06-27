@@ -12,10 +12,11 @@
 .brettpit-text-area {
     float: left;
     width: 50%;
+    color: #575756;
 }
 
 .brettpit-vertical-line {
-    border-right: 1px solid #575757;
+    border-right: 1px solid #575756;
     position: absolute;
     left: 50%;
     top: 5%;
@@ -42,7 +43,7 @@ input[type=text], input[type=password], input[type=email] {
     display: inline-block;
     margin: 8px 0;
     padding-left: 5px;
-    border: 1px solid #575757;
+    border: 1px solid #575756;
 }
 
 input[type=submit] {
@@ -50,7 +51,7 @@ input[type=submit] {
     display: inline-block;
     padding: 5px 40px;
     background-color: transparent;
-    border: 1px solid #575757;
+    border: 1px solid #575756;
     cursor: pointer;
 }
 
@@ -64,7 +65,7 @@ input[type=submit] {
     }
 
         .brettpit-tabs li a {
-            color: black;
+            color: #575756;
             float: left;
             display: block;
             padding: 4px 10px;
@@ -103,7 +104,7 @@ input[type=submit] {
 }
 
 .brettpit-tabbed-area div div, .brettpit-tabs li a {
-    border: 1px solid #575757;
+    border: 1px solid #575756;
 }
 
 #login-form {

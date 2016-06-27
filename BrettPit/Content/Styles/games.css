@@ -1,0 +1,28 @@
+﻿.brettpit-mygames-checkbox-area {
+    margin-right: 15%;
+    margin-left: 35%;
+    margin-bottom: 8px;
+    float: right;
+}
+
+.brettpit-games-table {
+    margin-left: 15%;
+    overflow: hidden;
+    float: left;
+}
+
+th, td {
+    border: 1px solid #575756;
+    width: 150px;
+    height: 150px;
+    text-align: center;
+    padding: 5px;
+}
+
+tr {
+    float: left;
+}
+
+.brettpit-game-name {
+    font-weight: bold;
+}

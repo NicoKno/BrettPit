@@ -1,11 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using Nancy;
+﻿using Nancy;
 using Nancy.Authentication.Forms;
 using Nancy.Bootstrapper;
-using Nancy.Conventions;
 using Nancy.TinyIoc;
 
 namespace BrettPit
