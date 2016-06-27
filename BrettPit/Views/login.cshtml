@@ -2,15 +2,15 @@
 <html>
 <head>
     <meta name="viewport" content="width=device-width" />
-    <link href="~/Content/Styles/site.css" rel="stylesheet" type="text/css" />
-    <link href="~/Content/Styles/login.css" rel="stylesheet" type="text/css" />
+    <link href="@Url.Content("~/Content/Styles/site.css")" rel="stylesheet" type="text/css" />
+    <link href="@Url.Content("~/Content/Styles/login.css")" rel="stylesheet" type="text/css" />
 
     <title>Login</title>
     @inherits Nancy.ViewEngines.Razor.NancyRazorViewBase<dynamic>
 </head>
 <body>
     <div class="brettpit-logo">
-        <img src="~/Content/Images/brettpit_logo2_big.png" alt="" />
+        <img src="@Url.Content("~/Content/Images/brettpit_logo2_big.png")" alt="" />
     </div>
     <div class="brettpit-content-container">
 
@@ -48,7 +48,7 @@
                             <input id="textbox-password-register" class="brettpit-textbox" name="Password" type="password" />
                             <label for="textbox-password-repeat-register" class="brettpit-text">Repeat</label>
                             <input id="textbox-password-repeat-register" class="brettpit-textbox" name="Repeat" type="password" />
-                            <input type="submit" value="Register" formaction="/register" />
+                            <input type="submit" value="Register" formaction="~/register" />
                         </form>
                     </div>
 

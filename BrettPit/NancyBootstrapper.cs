@@ -29,15 +29,9 @@ namespace BrettPit
             base.RequestStartup(container, pipelines, context);
             FormsAuthentication.Enable(pipelines, new FormsAuthenticationConfiguration
             {
-                RedirectUrl = "/login",
+                RedirectUrl = "~/login",
                 UserMapper = container.Resolve<IUserMapper>()
             });
         }
-
-        //protected override void ConfigureConventions(NancyConventions nancyConventions)
-        //{
-        //    nancyConventions.StaticContentsConventions.Add(StaticContentConventionBuilder.AddDirectory("Styles", @"Styles"));
-        //    base.ConfigureConventions(nancyConventions);
-        //}
     }
 }

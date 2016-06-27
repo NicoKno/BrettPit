@@ -36,7 +36,7 @@ namespace BrettPit.Controller
                 return Context.GetRedirect("~/login?error=true&username=" + (string)Request.Form.Username);
             }
 
-            return this.LoginAndRedirect(userGuid.Value, fallbackRedirectUrl:"/games");
+            return this.LoginAndRedirect(userGuid.Value, fallbackRedirectUrl:"~/games");
         }
 
         private dynamic GetLoginView(dynamic parameters)

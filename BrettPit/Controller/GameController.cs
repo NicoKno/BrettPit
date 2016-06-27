@@ -20,7 +20,6 @@ namespace BrettPit.Controller
         private dynamic GetSpecificGameView(dynamic arg)
         {
             var gameId = (int)arg.id;
-            gameId = 1;
 
             dynamic model = new ExpandoObject();
             var game = GameSetting.Get(gameId);
@@ -49,19 +48,16 @@ namespace BrettPit.Controller
             //all games
             var allGamesRecord = GamesSetting.GetAll();
 
-            if (allGamesRecord != null && allGamesRecord.Games.Any())
+            if (allGamesRecord != null && allGamesRecord.Any())
             {
-                model.allGames = allGamesRecord.Games;
+                model.allGames = allGamesRecord;
             }
 
             //users games
-            string curUser = Context.CurrentUser.UserName;
-            var myGamesRecord = GamesSetting.GetMy(curUser);
+            var currentUser = (UserModel)Context.CurrentUser;
+            var myGameRecords = GamesSetting.GetMyGames(currentUser.Id);
 
-            if (myGamesRecord != null && myGamesRecord.Games.Any())
-            {
-                model.myGames = myGamesRecord.Games;
-            }
+            model.myGames = myGameRecords;
 
             //filter on/off
             model.filter = false;

@@ -132,6 +132,7 @@
     <Content Include="Views\login.cshtml" />
     <Content Include="Views\games.cshtml" />
     <Content Include="Views\game.cshtml" />
+    <None Include="Properties\PublishProfiles\IIS.pubxml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -189,7 +190,6 @@
     <Compile Include="DataAccess\log_pwchange.cs">
       <DependentUpon>DataAccessModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\GamesModel.cs" />
     <Compile Include="DataAccess\pairings.cs">
       <DependentUpon>DataAccessModel.tt</DependentUpon>
     </Compile>
