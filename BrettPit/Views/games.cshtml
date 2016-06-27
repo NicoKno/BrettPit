@@ -6,30 +6,20 @@
     <title>Games</title>
     @inherits Nancy.ViewEngines.Razor.NancyRazorViewBase<dynamic>
         <script>
-            var checked = false;
-            function reloadPage(checked)
+            function SetTableVisibility()
             {
-                if (checked == true) {
-                    localStorage.setItem("Filter", true);
-                }
-                else {
-                    localStorage.setItem("Filter", false);
-                }
-                location.reload();
-            }
-
-            window.onload = function SetCheckbox()
-            {
-                checked = localStorage.getItem("Filter");
                 var cb = document.getElementById('cbfilter');
-                if (checked == "true") {
-                    cb.checked = true;
-                    var tab = document.getElementById('tabAllGames');
-                    tab.hidden = true;
+                if (cb.checked == true) {
+                    var tabAll = document.getElementById('tabMyGames');
+                    tabAll.hidden = false;
+                    var tabMy = document.getElementById('tabAllGames');
+                    tabMy.hidden = true;
                 }
                 else {
-                    var tab = document.getElementById('tabMyGames');
-                    tab.hidden = true;
+                    var tabAll = document.getElementById('tabMyGames');
+                    tabAll.hidden = true;
+                    var tabMy = document.getElementById('tabAllGames');
+                    tabMy.hidden = false;
                 }
             }
 
@@ -52,10 +42,10 @@
 
         all Games: <br />
         <div id="checkbox-container">
-            <input type="checkbox" id="cbfilter" name="cbFilter" onclick="reloadPage(this.checked)" />
+            <input type="checkbox" id="cbfilter" name="cbFilter" onclick="SetTableVisibility()" />
             <label for="GamesFilter">Show my games only</label>
         </div>
-        <table border="1" id="tabMyGames">
+        <table border="1" id="tabMyGames" hidden="hidden">
             @foreach (var item in Model.myGames)
             {
 
