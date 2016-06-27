@@ -1,0 +1,18 @@
+﻿.brettpit-user-scores-area {
+    float: right;
+    width: 50%;
+}
+
+.brettpit-matches-area {
+    float: right;
+    width: 50%;
+}
+
+.brettpit-title-area {
+    margin-bottom: 15px;   
+}
+
+.brettpit-game-title {
+    font-size: 24px;
+    font-weight: bold;
+}
