@@ -2,8 +2,28 @@
 <html>
 <head>
     <meta name="viewport" content="width=device-width" />
+    <link href="~/Content/Styles/site.css" rel="stylesheet" type="text/css" />
     <title>Games</title>
     @inherits Nancy.ViewEngines.Razor.NancyRazorViewBase<dynamic>
+        <script>
+            function SetTableVisibility()
+            {
+                var cb = document.getElementById('cbfilter');
+                if (cb.checked == true) {
+                    var tabAll = document.getElementById('tabMyGames');
+                    tabAll.hidden = false;
+                    var tabMy = document.getElementById('tabAllGames');
+                    tabMy.hidden = true;
+                }
+                else {
+                    var tabAll = document.getElementById('tabMyGames');
+                    tabAll.hidden = true;
+                    var tabMy = document.getElementById('tabAllGames');
+                    tabMy.hidden = false;
+                }
+            }
+
+        </script>
 </head>
 <body>
     <div>
@@ -20,20 +40,45 @@
     <div>
         Games here<br />
 
-        First Game: @Model.game<br /><br />
         all Games: <br />
-        <table>
-            @foreach (var item in Model.gamelist)
+        <div id="checkbox-container">
+            <input type="checkbox" id="cbfilter" name="cbFilter" onclick="SetTableVisibility()" />
+            <label for="GamesFilter">Show my games only</label>
+        </div>
+        <table border="1" id="tabMyGames" hidden="hidden">
+            @foreach (var item in Model.myGames)
             {
+
                 <tr>
-                    <td>
-                        @item.name
+                    <td width=0%>
+                        @item.Id
                     </td>
-                    <td>
-                        @item.description
+                    <td width=30%>
+                        @item.Name
+                    </td>
+                    <td width=70%>
+                        @item.Description
                     </td>
                 </tr>
             }
+        </table>
+        <table border="1"  id="tabAllGames">
+            @foreach (var item in Model.allGames)
+            {
+
+                <tr>
+                    <td width=0%>
+                        @item.Id
+                    </td>
+                    <td width=30%>
+                        @item.Name
+                    </td>
+                    <td width=70%>
+                        @item.Description
+                    </td>
+                </tr>
+            }
+
         </table>
     </div>
 </body>
