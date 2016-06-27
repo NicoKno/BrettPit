@@ -1,0 +1,55 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <link href="~/Content/Styles/site.css" rel="stylesheet" type="text/css" />
+    <link href="~/Content/Styles/game.css" rel="stylesheet" type="text/css" />
+    <title>@Model.GameName</title>
+    @inherits Nancy.ViewEngines.Razor.NancyRazorViewBase<dynamic>
+</head>
+<body>
+<div class="brettpit-content-container">
+    <div class="brettpit-title-area">
+        <span class="brettpit-game-title">@Model.GameName</span>
+        <span>- @Model.GameDescription</span>
+    </div>
+
+    <div>
+        <div class="brettpit-matches-area">
+            <table>
+                <tr>
+                    <th>Action</th>
+                    <th>Opponent</th>
+                    <th>Result</th>
+                    <th>Date</th>
+                </tr>
+                @foreach (var item in Model.Matches)
+                {
+                    <tr>
+                        <td>@item.Status</td>
+                        <td>@item.Opponent</td>
+                        <td>@item.Result</td>
+                        <td>@item.Date</td>
+                    </tr>
+                }
+            </table>
+        </div>
+
+        <div class="brettpit-user-scores-area">
+            <table>
+                @foreach (var item in Model.UserScores)
+                {
+                    <tr>
+                        <td>@item.Username</td>
+                        <td>@item.Score</td>
+                    </tr>
+                }
+            </table>
+            <div>
+                Your current score: @Model.CurrentUserScore
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>
