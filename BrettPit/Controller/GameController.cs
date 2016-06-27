@@ -21,19 +21,25 @@ namespace BrettPit.Controller
             model.Errored = Request.Query.error.HasValue;
             model.RegisterErrored = Request.Query.repeatError.HasValue;
 
-            var gameRecord = GameSetting.Get(1);
-            if (gameRecord != null)
+            //all games
+            var allGamesRecord = GamesSetting.GetAll();
+
+            if (allGamesRecord != null && allGamesRecord.Games.Any())
             {
-                model.game = gameRecord.Name;
+                model.allGames = allGamesRecord.Games;
             }
 
-            var gamesRecord = GamesSetting.GetAll();
+            //users games
+            string curUser = Context.CurrentUser.UserName;
+            var myGamesRecord = GamesSetting.GetMy(curUser);
 
-            if (gamesRecord != null && gamesRecord.Games.Any())
+            if (myGamesRecord != null && myGamesRecord.Games.Any())
             {
-                model.games = gamesRecord.Games[0].name;
-                model.gamelist = gamesRecord.Games;
+                model.myGames = myGamesRecord.Games;
             }
+
+            //filter on/off
+            model.filter = false;
 
             return View["games", model];
         }

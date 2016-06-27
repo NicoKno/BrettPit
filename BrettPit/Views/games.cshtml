@@ -2,13 +2,37 @@
 <html>
 <head>
     <meta name="viewport" content="width=device-width" />
+    <link href="~/Content/Styles/site.css" rel="stylesheet" type="text/css" />
     <title>Games</title>
     @inherits Nancy.ViewEngines.Razor.NancyRazorViewBase<dynamic>
         <script>
-            function reloadPage()
+            var checked = false;
+            function reloadPage(checked)
             {
+                if (checked == true) {
+                    localStorage.setItem("Filter", true);
+                }
+                else {
+                    localStorage.setItem("Filter", false);
+                }
                 location.reload();
             }
+
+            window.onload = function SetCheckbox()
+            {
+                checked = localStorage.getItem("Filter");
+                var cb = document.getElementById('cbfilter');
+                if (checked == "true") {
+                    cb.checked = true;
+                    var tab = document.getElementById('tabAllGames');
+                    tab.hidden = true;
+                }
+                else {
+                    var tab = document.getElementById('tabMyGames');
+                    tab.hidden = true;
+                }
+            }
+
         </script>
 </head>
 <body>
@@ -26,50 +50,45 @@
     <div>
         Games here<br />
 
-        First Game: @Model.game<br /><br />
         all Games: <br />
-        <table border="1">
-            <tr>
-                <td align="right" colspan="3">
-                    <input name="GamesFilter" type="checkbox" checked="@Model.filter" value="@Model.filter" onclick="reloadPage()" />Show my games only
-                </td>
-            </tr>
-            @if(Model.filter)
+        <div id="checkbox-container">
+            <input type="checkbox" id="cbfilter" name="cbFilter" onclick="reloadPage(this.checked)" />
+            <label for="GamesFilter">Show my games only</label>
+        </div>
+        <table border="1" id="tabMyGames">
+            @foreach (var item in Model.myGames)
             {
-                @foreach (var item in Model.gamelist)
-                {
 
-                    <tr>
-                        <td width=0%>
-                            @item.id
-                        </td>
-                        <td width=30%>
-                            @item.name
-                        </td>
-                        <td width=70%>
-                            @item.description
-                        </td>
-                    </tr>
-                }
+                <tr>
+                    <td width=0%>
+                        @item.Id
+                    </td>
+                    <td width=30%>
+                        @item.Name
+                    </td>
+                    <td width=70%>
+                        @item.Description
+                    </td>
+                </tr>
             }
-            else
+        </table>
+        <table border="1"  id="tabAllGames">
+            @foreach (var item in Model.allGames)
             {
-                @foreach (var item in Model.gamelist)
-                {
 
-                    <tr>
-                        <td width=0%>
-                            @item.id
-                        </td>
-                        <td width=70%>
-                            @item.name
-                        </td>
-                        <td width=30%>
-                            @item.description
-                        </td>
-                    </tr>
-                }
+                <tr>
+                    <td width=0%>
+                        @item.Id
+                    </td>
+                    <td width=30%>
+                        @item.Name
+                    </td>
+                    <td width=70%>
+                        @item.Description
+                    </td>
+                </tr>
             }
+
         </table>
     </div>
 </body>
