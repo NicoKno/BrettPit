@@ -21,7 +21,7 @@ namespace BrettPit.BusinessLogic
                     resultUser = new UserModel
                     {
                         Id = dbUser.id,
-                        Username = dbUser.name,
+                        UserName = dbUser.name,
                         Password = dbUser.password,
                         Email = dbUser.email,
                         IsAdmin = dbUser.isadmin,
@@ -46,7 +46,7 @@ namespace BrettPit.BusinessLogic
                     resultUser = new UserModel
                     {
                         Id = dbUser.id,
-                        Username = dbUser.name,
+                        UserName = dbUser.name,
                         Password = dbUser.password,
                         Email = dbUser.email,
                         IsAdmin = dbUser.isadmin,
@@ -65,7 +65,7 @@ namespace BrettPit.BusinessLogic
                 var dbUsers = db.users.Select(user => new UserModel
                 {
                     Id = user.id,
-                    Username = user.name,
+                    UserName = user.name,
                     Password = user.password,
                     Email = user.email,
                     IsAdmin = user.isadmin,
@@ -86,7 +86,7 @@ namespace BrettPit.BusinessLogic
                 {
                     var newUser = new users
                     {
-                        name = user.Username,
+                        name = user.UserName,
                         email = user.Email,
                         isadmin = user.IsAdmin,
                         password = user.Password.CalculateMd5Hash(),
