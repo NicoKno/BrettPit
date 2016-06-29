@@ -19,6 +19,11 @@ th, td {
     padding: 5px;
 }
 
+a {
+    text-decoration: none;
+    color: #575756;
+}
+
 tr {
     float: left;
 }

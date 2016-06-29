@@ -2,63 +2,66 @@
 <html>
 <head>
     <meta name="viewport" content="width=device-width" />
-    <link href="@Url.Content("~/Content/Styles/site.css")" rel="stylesheet" type="text/css"/>
-    <link href="@Url.Content("~/Content/Styles/games.css")" rel="stylesheet" type="text/css"/>
+    <link href="@Url.Content("~/Content/Styles/site.css")" rel="stylesheet" type="text/css" />
+    <link href="@Url.Content("~/Content/Styles/games.css")" rel="stylesheet" type="text/css" />
     <link href="@Url.Content("~/Content/Styles/navigation.css")" rel="stylesheet" type="text/css" />
 
     <title>Games</title>
     @inherits Nancy.ViewEngines.Razor.NancyRazorViewBase<dynamic>
-        <script>
-            function SetTableVisibility()
-            {
-                var cb = document.getElementById('cbfilter');
-                if (cb.checked == true) {
-                    var tabAll = document.getElementById('tabMyGames');
-                    tabAll.hidden = false;
-                    var tabMy = document.getElementById('tabAllGames');
-                    tabMy.hidden = true;
-                }
-                else {
-                    var tabAll = document.getElementById('tabMyGames');
-                    tabAll.hidden = true;
-                    var tabMy = document.getElementById('tabAllGames');
-                    tabMy.hidden = false;
-                }
+    <script>
+        function SetTableVisibility() {
+            var cb = document.getElementById('cbfilter');
+            if (cb.checked == true) {
+                var tabAll = document.getElementById('tabMyGames');
+                tabAll.hidden = false;
+                var tabMy = document.getElementById('tabAllGames');
+                tabMy.hidden = true;
             }
+            else {
+                var tabAll = document.getElementById('tabMyGames');
+                tabAll.hidden = true;
+                var tabMy = document.getElementById('tabAllGames');
+                tabMy.hidden = false;
+            }
+        }
 
-        </script>
+    </script>
 </head>
 <body>
-@Html.Partial("navigation", Model)
-<div class="brettpit-content-container">
-    <div class="brettpit-mygames-checkbox-area">
-        <input type="checkbox" id="cbfilter" name="cbFilter" onclick="SetTableVisibility()"/>
-        <label for="cbfilter">Show my games only</label>
-    </div>
-    <div class="brettpit-games-table">
-        <table id="tabMyGames" hidden="hidden">
-            @foreach (var item in Model.myGames)
+    @Html.Partial("navigation", Model)
+    <div class="brettpit-content-container">
+        <div class="brettpit-mygames-checkbox-area">
+            <input type="checkbox" id="cbfilter" name="cbFilter" onclick="SetTableVisibility()" />
+            <label for="cbfilter">Show my games only</label>
+        </div>
+        <div class="brettpit-games-table">
+            <table id="tabMyGames" hidden="hidden">
+                @foreach (var item in Model.myGames)
             {
-                <tr>
-                    <td>
-                        <span class="brettpit-game-name">@item.Name</span>
-                    </td>
-                </tr>
-            }
-        </table>
-        <table id="tabAllGames">
-            @foreach (var item in Model.allGames)
+                    <tr>
+                        <td>
+                            <a href="~/games/@item.Id">
+                                <span class="brettpit-game-name">@item.Name</span>
+                            </a>
+                        </td>
+                    </tr>
+                }
+            </table>
+            <table id="tabAllGames">
+                @foreach (var item in Model.allGames)
             {
-                <tr>
-                    <td>
-                        <span class="brettpit-game-name">@item.Name</span>
-                    </td>
-                </tr>
-            }
+                    <tr>
+                        <td>
+                            <a href="~/games/@item.Id">
+                                <span class="brettpit-game-name">@item.Name</span>
+                            </a>
+                        </td>
+                    </tr>
+                }
 
-        </table>
+            </table>
+        </div>
+
     </div>
-
-</div>
 </body>
 </html>
