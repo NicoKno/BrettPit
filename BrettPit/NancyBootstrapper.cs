@@ -1,11 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using Nancy;
+﻿using Nancy;
 using Nancy.Authentication.Forms;
 using Nancy.Bootstrapper;
-using Nancy.Conventions;
 using Nancy.TinyIoc;
 
 namespace BrettPit
@@ -29,15 +24,9 @@ namespace BrettPit
             base.RequestStartup(container, pipelines, context);
             FormsAuthentication.Enable(pipelines, new FormsAuthenticationConfiguration
             {
-                RedirectUrl = "/login",
+                RedirectUrl = "~/login",
                 UserMapper = container.Resolve<IUserMapper>()
             });
         }
-
-        //protected override void ConfigureConventions(NancyConventions nancyConventions)
-        //{
-        //    nancyConventions.StaticContentsConventions.Add(StaticContentConventionBuilder.AddDirectory("Styles", @"Styles"));
-        //    base.ConfigureConventions(nancyConventions);
-        //}
     }
 }

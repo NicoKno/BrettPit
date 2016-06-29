@@ -36,7 +36,7 @@ namespace BrettPit.Controller
                 return Context.GetRedirect("~/login?error=true&username=" + (string)Request.Form.Username);
             }
 
-            return this.LoginAndRedirect(userGuid.Value, fallbackRedirectUrl:"/games");
+            return this.LoginAndRedirect(userGuid.Value, fallbackRedirectUrl:"~/games");
         }
 
         private dynamic GetLoginView(dynamic parameters)
@@ -44,7 +44,6 @@ namespace BrettPit.Controller
             dynamic model = new ExpandoObject();
             model.Errored = Request.Query.error.HasValue;
             model.RegisterErrored = Request.Query.repeatError.HasValue;
-            model.Email = "geht@imail.com";
             return View["login", model];
         }
 

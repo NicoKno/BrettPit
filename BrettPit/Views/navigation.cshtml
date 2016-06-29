@@ -1,0 +1,24 @@
+﻿@inherits Nancy.ViewEngines.Razor.NancyRazorViewBase<dynamic>
+<div class="brettpit-navigation">
+    <div class="brettpit-icon">
+        <img src="@Url.Content("~/Content/Images/brettpit_onlyfont.png")" alt=""/>
+    </div>
+    <a href="~/logout">
+        <span class="brettpit-logout">Logout</span>
+    </a>
+    <a href="~/user">
+        <img src="@Url.Content("~/Content/Images/user.png")" alt="" />
+        <span>@Model.Username</span>
+    </a>
+    @if (Model.UserIsAdmin)
+    {
+        <a href="~/administration">
+            <img src="@Url.Content("~/Content/Images/security.png")" alt="" />
+            <span>Administration</span>
+        </a>
+    }
+    <a href="~/games">
+        <img src="@Url.Content("~/Content/Images/games.png")" alt="" />
+        <span>Games</span>
+    </a>
+</div>

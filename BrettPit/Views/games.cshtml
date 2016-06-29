@@ -2,7 +2,10 @@
 <html>
 <head>
     <meta name="viewport" content="width=device-width" />
-    <link href="~/Content/Styles/site.css" rel="stylesheet" type="text/css" />
+    <link href="@Url.Content("~/Content/Styles/site.css")" rel="stylesheet" type="text/css"/>
+    <link href="@Url.Content("~/Content/Styles/games.css")" rel="stylesheet" type="text/css"/>
+    <link href="@Url.Content("~/Content/Styles/navigation.css")" rel="stylesheet" type="text/css" />
+
     <title>Games</title>
     @inherits Nancy.ViewEngines.Razor.NancyRazorViewBase<dynamic>
         <script>
@@ -26,60 +29,36 @@
         </script>
 </head>
 <body>
-    <div>
-        @if (@Html.IsAuthenticated)
-        {
-            <div>Bereits eingelogt als @Html.CurrentUser.UserName</div>
-            @*<div><br />email: @Model.Email</div>*@
-        }
-        else
-        {
-            <div>Bitte einloggen</div>
-        }
+@Html.Partial("navigation", Model)
+<div class="brettpit-content-container">
+    <div class="brettpit-mygames-checkbox-area">
+        <input type="checkbox" id="cbfilter" name="cbFilter" onclick="SetTableVisibility()"/>
+        <label for="cbfilter">Show my games only</label>
     </div>
-    <div>
-        Games here<br />
-
-        all Games: <br />
-        <div id="checkbox-container">
-            <input type="checkbox" id="cbfilter" name="cbFilter" onclick="SetTableVisibility()" />
-            <label for="GamesFilter">Show my games only</label>
-        </div>
-        <table border="1" id="tabMyGames" hidden="hidden">
+    <div class="brettpit-games-table">
+        <table id="tabMyGames" hidden="hidden">
             @foreach (var item in Model.myGames)
             {
-
                 <tr>
-                    <td width=0%>
-                        @item.Id
-                    </td>
-                    <td width=30%>
-                        @item.Name
-                    </td>
-                    <td width=70%>
-                        @item.Description
+                    <td>
+                        <span class="brettpit-game-name">@item.Name</span>
                     </td>
                 </tr>
             }
         </table>
-        <table border="1"  id="tabAllGames">
+        <table id="tabAllGames">
             @foreach (var item in Model.allGames)
             {
-
                 <tr>
-                    <td width=0%>
-                        @item.Id
-                    </td>
-                    <td width=30%>
-                        @item.Name
-                    </td>
-                    <td width=70%>
-                        @item.Description
+                    <td>
+                        <span class="brettpit-game-name">@item.Name</span>
                     </td>
                 </tr>
             }
 
         </table>
     </div>
+
+</div>
 </body>
 </html>

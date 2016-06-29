@@ -1,0 +1,37 @@
+﻿.brettpit-icon img {
+    height: 50px;
+    padding-top: 7px;
+    margin-left: 10px
+}
+
+.brettpit-icon {
+    float: left;
+}
+
+.brettpit-navigation {
+    overflow: hidden;
+    width: 1050px;
+    margin-left: auto;
+    margin-right: auto;
+    background-color: #fff;
+    margin-bottom: 10px;
+}
+
+    .brettpit-navigation a {
+        float: right;
+        padding: 20px;
+        text-decoration: none;
+        color: #575756;
+        font-weight: bold;
+    }
+
+        .brettpit-navigation a img {
+            height: 24px;
+            padding-right: 5px;
+            margin-bottom: -6px;
+        }
+
+.brettpit-logout {
+    border: 1px solid #575756;
+    padding: 5px 40px;
+}
