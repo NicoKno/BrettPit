@@ -125,6 +125,7 @@
     <Content Include="Content\Styles\games.css" />
     <Content Include="Content\Styles\login.css" />
     <Content Include="Content\Styles\navigation.css" />
+    <Content Include="Content\Styles\resetpwd.css" />
     <Content Include="DataAccess\DataAccessModel.edmx.sql" />
     <Content Include="packages.config" />
     <EntityDeploy Include="DataAccess\DataAccessModel.edmx">

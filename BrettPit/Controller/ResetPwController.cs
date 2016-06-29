@@ -24,7 +24,7 @@ namespace BrettPit.Controller
             var email = (string)Request.Form.email;
             //hier validierungschecks für die email adresse einfügen
 
-            UserSetting.ResetPW(email);
+            UserSetting.ResetPassword(email);
             return Context.GetRedirect("~/login");
         }
     }

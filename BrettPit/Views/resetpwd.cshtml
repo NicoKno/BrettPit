@@ -1,15 +1,23 @@
 ﻿<!DOCTYPE html>
 <html>
-    <head>
-        <title></title>
-    </head>
+<head>
+    <link href="@Url.Content("~/Content/Styles/site.css")" rel="stylesheet" type="text/css" />
+    <link href="@Url.Content("~/Content/Styles/resetpwd.css")" rel="stylesheet" type="text/css" />
+    <title>Reset Password</title>
+    @inherits Nancy.ViewEngines.Razor.NancyRazorViewBase<dynamic>
+</head>
 <body>
-    <div id="login-form">
-        <form method="POST">
-            <label for="textbox-email">Please enter your email address to reset your password:</label><br />
-            <input id="textbox-email" name="email" type="email" />
-            <input type="submit" value="reset password" />
-        </form>
+    <div id="login-form" class="brettpit-content-container">
+        <div class="brettpit-icon">
+            <img src="@Url.Content("~/Content/Images/brettpit_onlyfont.png")" alt="" />
+        </div>
+        <div class="brettpit-reset-form">
+            <form method="POST">
+                <label for="textbox-email">Please enter your email address to reset your password:</label>
+                <input id="textbox-email" class="brettpit-textbox" name="email" type="email" />
+                <input type="submit" value="Reset password" />
+            </form>
+        </div>
     </div>
 </body>
 </html>

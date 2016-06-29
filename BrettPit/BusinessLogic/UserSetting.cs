@@ -15,7 +15,7 @@ namespace BrettPit.BusinessLogic
             using (var db = new DataAccessContext())
             {
                 var dbUser = db.users.FirstOrDefault(user => string.Equals(user.loginid, loginId));
-                
+
                 if (dbUser != null)
                 {
                     resultUser = new UserModel
@@ -108,48 +108,46 @@ namespace BrettPit.BusinessLogic
             return result;
         }
 
-        private static string GetRandPW(int Länge)
+        private static string GetRandomPassword(int Länge)
         {
-            string ret = string.Empty;
-            System.Text.StringBuilder SB = new System.Text.StringBuilder();
-            string Content = "1234567890ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvw!öäüÖÄÜß\"§$%&/()=?*#-";
-            Random rnd = new Random();
-            for (int i = 0; i < Länge; i++)
-                SB.Append(Content[rnd.Next(Content.Length)]);
-            return SB.ToString();
+            var stringBuilder = new System.Text.StringBuilder();
+            const string content = "1234567890ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvw!öäüÖÄÜß\"§$%&/()=?*#-";
+            var rnd = new Random();
+            for (var i = 0; i < Länge; i++)
+            {
+                stringBuilder.Append(content[rnd.Next(content.Length)]);
+            }
+            return stringBuilder.ToString();
         }
 
-        public static bool ResetPW(string email)
+        public static bool ResetPassword(string email)
         {
-            bool result = true;
+            bool result;
 
             try
             {
                 using (var userDb = new DataAccessContext())
                 {
-                    if (userDb != null)
+                    var userRecord = userDb.users.FirstOrDefault(user => string.Equals(user.email, email));
+                    if (userRecord != null)
                     {
-                        var userDS = userDb.users.FirstOrDefault(user => string.Equals(user.email, email));
-                        if (userDS != null)
+                        var newPassword = GetRandomPassword(32);
+                        //email senden
+                        result = EmailUtil.SendPasswordEmail(email, newPassword);
+                        if (result)
                         {
-                            string newPW = GetRandPW(32);
-                            //email senden
-                            result = EmailUtil.SendPwEmail(email, newPW);
-                            if(result)
-                            { 
-                                //nur wenn die email gesendet werden konnte, neues PW in DB schreiben
-                                userDS.password = EncryptionUtil.CalculateMd5Hash(newPW);
-                                //notwendig???
-                                userDb.Entry(userDS).State = System.Data.Entity.EntityState.Modified;
-                                userDb.SaveChanges();
-                            }
-                        }
-                        else
-                        {
-                            result = false;
+                            //nur wenn die email gesendet werden konnte, neues PW in DB schreiben
+                            userRecord.password = newPassword.CalculateMd5Hash();
+                            //notwendig???
+                            userDb.Entry(userRecord).State = System.Data.Entity.EntityState.Modified;
+                            userDb.SaveChanges();
                         }
                     }
-                }            
+                    else
+                    {
+                        result = false;
+                    }
+                }
             }
             catch (Exception)
             {
