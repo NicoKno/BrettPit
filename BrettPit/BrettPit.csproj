@@ -138,6 +138,7 @@
     <Content Include="Views\login.cshtml" />
     <Content Include="Views\games.cshtml" />
     <Content Include="Views\game.cshtml" />
+    <Content Include="Views\resetpwd.cshtml" />
     <Content Include="Views\navigation.cshtml" />
     <None Include="Properties\PublishProfiles\IIS.pubxml" />
     <None Include="Web.Debug.config">
@@ -161,8 +162,10 @@
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BusinessLogic\EmailUtil.cs" />
     <Compile Include="BusinessLogic\EncryptionUtil.cs" />
     <Compile Include="BusinessLogic\GamesSetting.cs" />
+    <Compile Include="Controller\ResetPwController.cs" />
     <Compile Include="Models\MatchModel.cs" />
     <Compile Include="BusinessLogic\MatchSetting.cs" />
     <Compile Include="Models\GameModel.cs" />
