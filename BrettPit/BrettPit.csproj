@@ -117,9 +117,14 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\Images\brettpit_logo2_big.png" />
+    <Content Include="Content\Images\brettpit_onlyfont.png" />
+    <Content Include="Content\Images\games.png" />
+    <Content Include="Content\Images\security.png" />
+    <Content Include="Content\Images\user.png" />
     <Content Include="Content\Styles\game.css" />
     <Content Include="Content\Styles\games.css" />
     <Content Include="Content\Styles\login.css" />
+    <Content Include="Content\Styles\navigation.css" />
     <Content Include="DataAccess\DataAccessModel.edmx.sql" />
     <Content Include="packages.config" />
     <EntityDeploy Include="DataAccess\DataAccessModel.edmx">
@@ -133,6 +138,7 @@
     <Content Include="Views\login.cshtml" />
     <Content Include="Views\games.cshtml" />
     <Content Include="Views\game.cshtml" />
+    <Content Include="Views\navigation.cshtml" />
     <None Include="Properties\PublishProfiles\IIS.pubxml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>

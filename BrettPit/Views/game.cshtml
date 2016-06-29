@@ -4,11 +4,13 @@
     <meta name="viewport" content="width=device-width" />
     <link href="@Url.Content("~/Content/Styles/site.css")" rel="stylesheet" type="text/css" />
     <link href="@Url.Content("~/Content/Styles/game.css")" rel="stylesheet" type="text/css"/>
+    <link href="@Url.Content("~/Content/Styles/navigation.css")" rel="stylesheet" type="text/css" />
 
     <title>@Model.GameName</title>
     @inherits Nancy.ViewEngines.Razor.NancyRazorViewBase<dynamic>
 </head>
 <body>
+@Html.Partial("navigation", Model)
 <div class="brettpit-content-container">
     <div class="brettpit-title-area">
         <span class="brettpit-game-title">@Model.GameName</span>

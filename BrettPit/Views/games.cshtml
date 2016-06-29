@@ -3,7 +3,8 @@
 <head>
     <meta name="viewport" content="width=device-width" />
     <link href="@Url.Content("~/Content/Styles/site.css")" rel="stylesheet" type="text/css"/>
-    <link href="@Url.Content("~/Content/Styles/games.css")" rel="stylesheet" type="text/css" />
+    <link href="@Url.Content("~/Content/Styles/games.css")" rel="stylesheet" type="text/css"/>
+    <link href="@Url.Content("~/Content/Styles/navigation.css")" rel="stylesheet" type="text/css" />
 
     <title>Games</title>
     @inherits Nancy.ViewEngines.Razor.NancyRazorViewBase<dynamic>
@@ -28,9 +29,10 @@
         </script>
 </head>
 <body>
+@Html.Partial("navigation", Model)
 <div class="brettpit-content-container">
     <div class="brettpit-mygames-checkbox-area">
-        <input type="checkbox" id="cbfilter" name="cbFilter" onclick="SetTableVisibility()" />
+        <input type="checkbox" id="cbfilter" name="cbFilter" onclick="SetTableVisibility()"/>
         <label for="cbfilter">Show my games only</label>
     </div>
     <div class="brettpit-games-table">

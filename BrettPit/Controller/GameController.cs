@@ -36,6 +36,11 @@ namespace BrettPit.Controller
 
             model.Matches = MatchSetting.GetMatches(gameId, currentUser.Id);
 
+            //User Information for Navigation
+            model.Username = currentUser.UserName;
+            model.UserId = currentUser.Id;
+            model.UserIsAdmin = currentUser.IsAdmin;
+
             return View["game", model];
         }
 
@@ -61,6 +66,11 @@ namespace BrettPit.Controller
 
             //filter on/off
             model.filter = false;
+
+            //User Information for Navigation
+            model.Username = currentUser.UserName;
+            model.UserId = currentUser.Id;
+            model.UserIsAdmin = currentUser.IsAdmin;
 
             return View["games", model];
         }
