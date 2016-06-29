@@ -73,7 +73,7 @@ namespace BrettPit.Controller
 
         private dynamic LogOut(dynamic arg)
         {
-            return this.LogoutAndRedirect("~/games");
+            return this.LogoutAndRedirect("~/login");
         }
 
 
