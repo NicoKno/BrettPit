@@ -67,7 +67,7 @@ namespace BrettPit.Controller
                 expiry = DateTime.Now.AddDays(7);
             }
 
-            return this.LoginAndRedirect(userGuid.Value, expiry);
+            return this.LoginAndRedirect(userGuid.Value, expiry, "~/games");
         }
 
         private dynamic LogOut(dynamic arg)
