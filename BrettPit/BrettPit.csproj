@@ -126,6 +126,7 @@
     <Content Include="Content\Styles\login.css" />
     <Content Include="Content\Styles\navigation.css" />
     <Content Include="Content\Styles\resetpwd.css" />
+    <Content Include="Content\Styles\user.css" />
     <Content Include="DataAccess\DataAccessModel.edmx.sql" />
     <Content Include="packages.config" />
     <EntityDeploy Include="DataAccess\DataAccessModel.edmx">
@@ -142,6 +143,7 @@
     <Content Include="Views\resetpwd.cshtml" />
     <Content Include="Views\navigation.cshtml" />
     <None Include="Properties\PublishProfiles\IIS.pubxml" />
+    <Content Include="Views\user.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -167,6 +169,7 @@
     <Compile Include="BusinessLogic\EncryptionUtil.cs" />
     <Compile Include="BusinessLogic\GamesSetting.cs" />
     <Compile Include="Controller\ResetPwController.cs" />
+    <Compile Include="Controller\UserController.cs" />
     <Compile Include="Models\MatchModel.cs" />
     <Compile Include="BusinessLogic\MatchSetting.cs" />
     <Compile Include="Models\GameModel.cs" />

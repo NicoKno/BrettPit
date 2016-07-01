@@ -1,0 +1,62 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <link href="@Url.Content("~/Content/Styles/site.css")" rel="stylesheet" type="text/css" />
+    <link href="@Url.Content("~/Content/Styles/user.css")" rel="stylesheet" type="text/css" />
+    <link href="@Url.Content("~/Content/Styles/navigation.css")" rel="stylesheet" type="text/css" />
+
+    <title>user settings</title>
+    @inherits Nancy.ViewEngines.Razor.NancyRazorViewBase<dynamic>
+
+    <script>
+        function ClearMsg()
+        {
+            var lbl = document.getElementById('lblMsg');
+            lbl.textContent = "";
+        }
+    </script>
+</head>
+<body>
+    @Html.Partial("navigation", Model)
+    <div class="brettpit-content-container">
+        <div class="brettpit-boxwrap">
+            <div id="login-form" class="brettpit-content-box">
+                <form method="POST">
+                    <label for="textbox-username" class="brettpit-text">Username</label>
+                    <input id="textbox-username" class="brettpit-textbox" name="Username" type="text" value="@Model.Username" onchange="ClearMsg()" />
+                    <label for="textbox-email" class="brettpit-text">E-Mail</label>
+                    <input id="textbox-email" class="brettpit-textbox" name="Email" type="text" value="@Model.UserEmail" onchange="ClearMsg()" />
+                    <label for="textbox-password-old" class="brettpit-text">Password</label>
+                    <input id="textbox-password-old" class="brettpit-textbox" name="OldPassword" type="password" onchange="ClearMsg()" />
+                    <label for="textbox-password-new1" class="brettpit-text">Password</label>
+                    <input id="textbox-password-new1" class="brettpit-textbox" name="NewPassword" type="password" onchange="ClearMsg()" />
+                    <label for="textbox-password-new2" class="brettpit-text">Password</label>
+                    <input id="textbox-password-new2" class="brettpit-textbox" name="Repeat" type="password" onchange="ClearMsg()" />
+                    <label id="lblMsg" class="brettpit-lbl">@Model.Message</label> <br /><br /><br />
+                    <input type="submit" class="brettpit-submit-left" value="Delete Account" formaction="~/user/delete" name="delAcc" onclick="return confirm('Are you sure?')" />
+                    <input type="submit" class="brettpit-submit-right" value="Save" formaction="~/user/save" />
+                    
+
+                </form>
+            </div>
+            @if (Model.Errored)
+            {
+                <div id="errorBox" class="floatingError">Invalid Password</div>
+            }
+
+            @if (Model.RegisterErrored)
+            {
+                <div id="registerErrorBox" class="floatingError">
+                    Registration failed. Please note the following:
+                    <ul>
+                        <li>To save the current data, type in your password in the old password field</li>
+                        <li>To change your password, type in your old password and the new one and repeat it. The two new password strings must match.</li>
+                    </ul>
+                </div>
+            }
+        </div>
+
+    </div>
+</body>
+</html>

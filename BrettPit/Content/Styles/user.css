@@ -1,0 +1,43 @@
+﻿.brettpit-content-box {
+    overflow: hidden;
+    padding: 15px;
+    margin: auto;
+    width: 500px;
+}
+
+.brettpit-boxwrap {
+    position: relative;
+    min-height: 300px;
+}
+
+.brettpit-submit-left{
+    float: left;
+    color: red;
+}
+
+.brettpit-submit-right {
+    float: right;
+}
+
+.brettpit-lbl {
+    float: left;
+    background-color: lightgrey;
+}
+
+input[type=text], input[type=password], input[type=email] {
+    width: 493px;
+    display: inline-block;
+    margin: 8px 0;
+    padding-left: 5px;
+    border: 1px solid #575756;
+}
+
+input[type=submit] {
+    display: inline-block;
+    margin: 0px 0;
+    padding: 5px 40px;
+    background-color: transparent;
+    border: 1px solid #575756;
+    cursor: pointer;
+}
+

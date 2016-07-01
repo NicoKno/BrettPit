@@ -157,5 +157,104 @@ namespace BrettPit.BusinessLogic
 
             return result;
         }
+
+        public static bool ChangeNameAndEmail(int userid, string NewUsername, string NewUseremail)
+        {
+            bool result;
+
+            try
+            {
+                using (var userDb = new DataAccessContext())
+                {
+                    var userRecord = userDb.users.Find(userid);
+                    if (userRecord != null)
+                    {
+                        userRecord.name = NewUsername;
+                        userRecord.email = NewUseremail;
+                        userDb.Entry(userRecord).State = System.Data.Entity.EntityState.Modified;
+                        userDb.SaveChanges();
+                        result = true;
+                    }
+                    else
+                    {
+                        result = false;
+                    }
+                }
+            }
+            catch (Exception)
+            {
+                //TODO: Log exception to log
+                result = false;
+            }
+            return result;
+        }
+
+        public static bool ChangePassword(int userid, string NewPassword)
+        {
+            bool result;
+
+            try
+            {
+                using (var userDb = new DataAccessContext())
+                {
+                    var userRecord = userDb.users.Find(userid);
+                    if (userRecord != null)
+                    {
+                        userRecord.password = NewPassword.CalculateMd5Hash();
+                        userDb.Entry(userRecord).State = System.Data.Entity.EntityState.Modified;
+                        userDb.SaveChanges();
+                        result = true;
+                    }
+                    else
+                    {
+                        result = false;
+                    }
+                }
+            }
+            catch (Exception)
+            {
+                //TODO: Log exception to log
+                result = false;
+            }
+
+            return result;
+        }
+
+        public static bool DeleteAccount(int userid)
+        {
+            bool result;
+
+            try
+            {
+                //deleting the corresponding datasets in table "pairings"
+                using (var matchDb = new DataAccessContext())
+                {
+                    matchDb.pairings.RemoveRange(matchDb.pairings.Where(match => match.uid1 == userid || match.uid2 == userid));
+                    matchDb.SaveChanges();
+                }
+
+                //deleting the corresponding datasets in table "elos"
+                using (var eloDb = new DataAccessContext())
+                {
+                    eloDb.eloes.RemoveRange(eloDb.eloes.Where(elo => elo.uid == userid));
+                    eloDb.SaveChanges();
+                }
+
+                //deleting the corresponding datasets in table "users"
+                using (var userDb = new DataAccessContext())
+                {
+                    userDb.users.Remove(userDb.users.Find(userid));
+                    userDb.SaveChanges();
+                }
+                result = true;
+            }
+            catch (Exception)
+            {
+                //TODO: Log exception to log
+                result = false;
+            }
+
+            return result;
+        }
     }
 }
