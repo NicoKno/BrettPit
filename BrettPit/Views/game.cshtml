@@ -39,6 +39,7 @@
         </div>
 
         <div class="brettpit-user-scores-area">
+            <input class="brettpit-textbox" type="text"/>
             <table>
                 @foreach (var item in Model.UserScores)
                 {
@@ -49,7 +50,7 @@
                 }
             </table>
             <div>
-                Your current score: @Model.CurrentUserScore
+                <span>Your current score: </span><span>@Model.CurrentUserScore</span>
             </div>
         </div>
     </div>

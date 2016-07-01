@@ -32,7 +32,7 @@ namespace BrettPit.BusinessLogic
         {
             using (var db = new DataAccessContext())
             {
-                var dbUserScores = db.eloes.Where(elo => elo.game_systems.id == gameId).Select(elo => new UserScoreModel
+                var dbUserScores = db.eloes.Where(elo => elo.game_systems.id == gameId).OrderByDescending(elo => elo.elo).Select(elo => new UserScoreModel
                 {
                     Username = elo.users.name,
                     Score = elo.elo

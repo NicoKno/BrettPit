@@ -32,7 +32,11 @@ namespace BrettPit.Controller
 
             var scoreForAllUsers = GameSetting.GetScoreForAllUsers(gameId);
             model.UserScores = scoreForAllUsers;
-            model.CurrentUserScore = scoreForAllUsers.FirstOrDefault(score => score.Username == currentUser.UserName);
+            var currentUserScoreModel = scoreForAllUsers.FirstOrDefault(score => score.Username == currentUser.UserName);
+            if (currentUserScoreModel != null)
+            {
+                model.CurrentUserScore = currentUserScoreModel.Score;
+            }
 
             model.Matches = MatchSetting.GetMatches(gameId, currentUser.Id);
 

@@ -30,7 +30,7 @@ namespace BrettPit.BusinessLogic
                         Result = GetResult(match.Result),
                         Status = GetStatus(match.Status),
                         Date = match.Date
-                    });
+                    }).OrderByDescending(match => match.Date) ;
 
                 return matches.ToList();
             }
