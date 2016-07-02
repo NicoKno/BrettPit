@@ -3,57 +3,171 @@
 <head>
     <meta name="viewport" content="width=device-width" />
     <link href="@Url.Content("~/Content/Styles/site.css")" rel="stylesheet" type="text/css" />
-    <link href="@Url.Content("~/Content/Styles/game.css")" rel="stylesheet" type="text/css"/>
+    <link href="@Url.Content("~/Content/Styles/game.css")" rel="stylesheet" type="text/css" />
     <link href="@Url.Content("~/Content/Styles/navigation.css")" rel="stylesheet" type="text/css" />
+    <script src="@Url.Content("~/Content/Scripts/jquery-3.0.0.min.js")"></script>
 
     <title>@Model.GameName</title>
     @inherits Nancy.ViewEngines.Razor.NancyRazorViewBase<dynamic>
+
+    <script>
+        window.onload = function () {
+            //document.getElementById("brettpit-searchbox").focus();
+            search();
+        }
+
+        var oldVal = undefined;
+        function search() {
+            var searchTerm = $("#brettpit-searchbox").val();
+            if (searchTerm === oldVal) {
+                return;
+            }
+
+            oldVal = searchTerm;
+
+            $.get("/games/@Model.GameId/search?searchTerm=" + searchTerm).done(function (data) {
+                $("#partialPlaceHolder").html(data);
+            }).fail(function (error) {
+                console.log(error);
+            });
+        }
+
+        function accept(itemId) {
+            $.get("/games/@Model.GameId/matches/" + itemId + "/accept").done(function (data) {
+                window.location.reload(false);
+            });
+        }
+
+        function decline(itemId) {
+            $.get("/games/@Model.GameId/matches/" + itemId + "/decline").done(function (data) {
+                window.location.reload(false);
+            });
+        }
+
+        
+        function OpenDialog() {
+            var modal = document.getElementById("brettpit-match-dialog");
+            modal.style.display = "block";
+        }
+
+        function CancelDialog() {
+            var modal = document.getElementById("brettpit-match-dialog");
+            modal.style.display = "none";
+        }
+
+        window.onclick = function (event) {
+            var modal = document.getElementById("brettpit-match-dialog");
+            if (event.target == modal) {
+                modal.style.display = "none";
+            }
+        }
+
+        function AddMatch() {
+            var selectedPlayer = $('input[name="player"]:checked').val();
+            var selectedResult = $('input[name="result"]:checked').val();
+
+            $.post("/games/@Model.GameId/matches/", {
+                UserId: selectedPlayer,
+                Result: selectedResult
+            }).done(function(data) {
+                window.location.reload(false);
+            });
+
+            var modal = document.getElementById("brettpit-match-dialog");
+            modal.style.display = "none";
+        }
+    </script>
 </head>
 <body>
-@Html.Partial("navigation", Model)
-<div class="brettpit-content-container">
-    <div class="brettpit-title-area">
-        <span class="brettpit-game-title">@Model.GameName</span>
-        <span>- @Model.GameDescription</span>
-    </div>
+    @Html.Partial("navigation", Model)
+    <div class="brettpit-content-container">
+        <div class="brettpit-title-area">
+            <span class="brettpit-game-title">@Model.GameName</span>
+            <span>- @Model.GameDescription</span>
+        </div>
 
-    <div>
         <div class="brettpit-matches-area">
+            <span class="brettpit-matches-title">Latest matches</span>
+            <div class="brettpit-add-button" onclick="OpenDialog()">
+                <span>Add match result</span>
+            </div>
             <table>
                 <tr>
-                    <th>Action</th>
-                    <th>Opponent</th>
-                    <th>Result</th>
-                    <th>Date</th>
+                    <th class="brettpit-action">Action</th>
+                    <th class="brettpit-opponent">Opponent</th>
+                    <th class="brettpit-result">Result</th>
+                    <th class="brettpit-date">Date</th>
                 </tr>
                 @foreach (var item in Model.Matches)
-                {
+            {
                     <tr>
-                        <td>@item.Status</td>
-                        <td>@item.Opponent</td>
-                        <td>@item.Result</td>
-                        <td>@item.Date</td>
+                        @if (item.Status == "Open")
+                        {
+                            <td class="brettpit-action">
+                                <span class="brettpit-accept-button" onclick="accept(@item.Id)">
+                                    <img src="@Url.Content("~/Content/Images/accept.png")" alt="" />
+                                </span>
+                                <span class="brettpit-decline-button" onclick="decline(@item.Id)">
+                                    <img src="@Url.Content("~/Content/Images/decline.png")" alt="" />
+                                </span>
+                            </td>
+                        }
+                        else
+                        {
+                            <td class="brettpit-action">@item.Status</td>
+                        }
+                        <td class="brettpit-opponent">@item.Opponent</td>
+                        <td class="brettpit-result">@item.Result</td>
+                        <td class="brettpit-date">@item.Date</td>
                     </tr>
                 }
             </table>
         </div>
 
         <div class="brettpit-user-scores-area">
-            <input class="brettpit-textbox" type="text"/>
-            <table>
-                @foreach (var item in Model.UserScores)
-                {
-                    <tr>
-                        <td>@item.Username</td>
-                        <td>@item.Score</td>
-                    </tr>
-                }
-            </table>
+            <label for="brettpit-searchbox">Search for player</label>
+            <input id="brettpit-searchbox"
+                   class="brettpit-textbox"
+                   type="text"
+                   onkeyup="search()"
+                   autocomplete="off" />
+            <div id="partialPlaceHolder" class="brettpit-user-table"></div>
             <div>
-                <span>Your current score: </span><span>@Model.CurrentUserScore</span>
+                <span>Your current rating: </span><span>@Model.CurrentUserScore</span>
             </div>
         </div>
     </div>
-</div>
+
+    <div id="brettpit-match-dialog" class="brettpit-dialog">
+        <div class="brettpit-dialog-content">
+            <input class="brettpit-textbox" type="text" autocomplete="off" />
+            <table class="brettpit-player-select-table">
+                <tr>
+                    <th class="brettpit-select-column">Select</th>
+                    <th class="brettpit-player-column">Player</th>
+                </tr>
+                @foreach (var item in Model.MatchUsers)
+            {
+                    <tr>
+                        <td class="brettpit-select-column">
+                            <input value="@item.Id" name="player" type="radio" />
+                        </td>
+                        <td class="brettpit-player-column">
+                            @item.UserName
+                        </td>
+                    </tr>
+                }
+            </table>
+            <input id="brettpit-result-select-won" type="radio" name="result" checked="checked" value="2" /><label for="brettpit-result-select-won">I won</label>
+            <input id="brettpit-result-select-lost" type="radio" name="result" value="1"/><label for="brettpit-result-select-lost">I lost</label>
+            <input id="brettpit-result-select-draw" type="radio" name="result" value="0"/><label for="brettpit-result-select-draw">It was a draw</label><br/>
+            <div class="brettpit-add-dialog-button" onclick="AddMatch()">
+                Add
+            </div>
+            <div class="brettpit-cancel-button" onclick="CancelDialog()">
+                Cancel
+            </div>
+        </div>
+    </div>
 </body>
 </html>

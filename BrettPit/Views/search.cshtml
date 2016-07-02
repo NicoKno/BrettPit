@@ -1,0 +1,15 @@
+﻿@inherits Nancy.ViewEngines.Razor.NancyRazorViewBase<dynamic>
+<table>
+    <tr>
+        <th class="brettpit-player">Player</th>
+        <th class="brettpit-rating">Rating</th>
+    </tr>
+    @foreach (var item in Model.UserScores)
+    {
+        <tr>
+            <td class="brettpit-player">@item.Username</td>
+            <td class="brettpit-rating">@item.Score</td>
+        </tr>
+    }
+</table>
+

@@ -28,7 +28,7 @@ namespace BrettPit.BusinessLogic
 
             return resultGame;
         }
-        public static IEnumerable<UserScoreModel> GetScoreForAllUsers(int gameId)
+        public static List<UserScoreModel> GetScoreForAllUsers(int gameId)
         {
             using (var db = new DataAccessContext())
             {

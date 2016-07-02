@@ -1,9 +1,12 @@
-﻿using Nancy;
+﻿using System;
+using Nancy;
 using Nancy.Security;
 using BrettPit.BusinessLogic;
 using System.Dynamic;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using BrettPit.Models;
+using Nancy.ModelBinding;
 
 namespace BrettPit.Controller
 {
@@ -15,6 +18,54 @@ namespace BrettPit.Controller
             
             Get["/"] = GetGamesView;
             Get["/{id}"] = GetSpecificGameView;
+            Get["/{id}/search"] = GetSearchView;
+            Get["/{id}/matches/{matchid}/accept"] = AcceptMatch;
+            Get["/{id}/matches/{matchid}/decline"] = DeclineMatch;
+            Post["/{id}/matches/"] = AddPlayerMatch;
+        }
+
+        private dynamic AddPlayerMatch(dynamic arg)
+        {
+            var match = this.Bind<MatchUserResultModel>();
+            var currentUser = (UserModel)Context.CurrentUser;
+            var gameId = (int) arg.id;
+
+            MatchSetting.Save(match.UserId, match.Result, currentUser.Id, gameId);
+
+            return null;
+        }
+
+        private dynamic DeclineMatch(dynamic arg)
+        {
+            var gameId = (int)arg.id;
+            var matchId = (int)arg.matchid;
+
+            MatchSetting.ChangeMatchState(gameId, matchId, 2);
+
+            return null;
+        }
+
+        private dynamic AcceptMatch(dynamic arg)
+        {
+            var gameId = (int) arg.id;
+            var matchId = (int) arg.matchid;
+
+            MatchSetting.ChangeMatchState(gameId, matchId, 1);
+
+            return null;
+        }
+
+        private dynamic GetSearchView(dynamic arg)
+        {
+            var searchTerm = (string) Request.Query.searchTerm ?? string.Empty;
+            var gameId = (int)arg.id;
+            dynamic model = new ExpandoObject();
+
+            var scoreForAllUsers = GameSetting.GetScoreForAllUsers(gameId);
+
+            model.UserScores = scoreForAllUsers.Where(score => score.Username.IndexOf(searchTerm, StringComparison.InvariantCultureIgnoreCase) > -1).ToList();
+
+            return View["search", model];
         }
 
         private dynamic GetSpecificGameView(dynamic arg)
@@ -29,9 +80,10 @@ namespace BrettPit.Controller
             model.GameDescription = game.Description;
 
             var currentUser = (UserModel)Context.CurrentUser;
-
+            
             var scoreForAllUsers = GameSetting.GetScoreForAllUsers(gameId);
             model.UserScores = scoreForAllUsers;
+
             var currentUserScoreModel = scoreForAllUsers.FirstOrDefault(score => score.Username == currentUser.UserName);
             if (currentUserScoreModel != null)
             {
@@ -39,6 +91,8 @@ namespace BrettPit.Controller
             }
 
             model.Matches = MatchSetting.GetMatches(gameId, currentUser.Id);
+
+            model.MatchUsers = UserSetting.All().Where(user => user.Id != currentUser.Id).ToList();
 
             //User Information for Navigation
             model.Username = currentUser.UserName;

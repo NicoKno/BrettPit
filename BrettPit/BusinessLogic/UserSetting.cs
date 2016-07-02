@@ -60,9 +60,10 @@ namespace BrettPit.BusinessLogic
 
         public static IEnumerable<UserModel> All()
         {
+            IEnumerable<UserModel> dbUsers;
             using (var db = new DataAccessContext())
             {
-                var dbUsers = db.users.Select(user => new UserModel
+                dbUsers = db.users.ToList().Select(user => new UserModel
                 {
                     Id = user.id,
                     UserName = user.name,
@@ -71,9 +72,9 @@ namespace BrettPit.BusinessLogic
                     IsAdmin = user.isadmin,
                     LoginGuid = Guid.Parse(user.loginid)
                 });
-
-                return dbUsers;
             }
+
+            return dbUsers.ToList();
         }
 
         public static bool Save(UserModel user)
