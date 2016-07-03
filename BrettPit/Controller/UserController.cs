@@ -1,5 +1,4 @@
-﻿using System;
-using System.Dynamic;
+﻿using System.Dynamic;
 using BrettPit.BusinessLogic;
 using Nancy;
 using Nancy.Security;
@@ -42,13 +41,13 @@ namespace BrettPit.Controller
             //User Information for Navigation
             var currentUser = (UserModel)Context.CurrentUser;
 
-            var Username = (string)Request.Form.Username;
-            var OldPassword = (string)Request.Form.OldPassword;
-            var NewPassword = (string)Request.Form.NewPassword;
-            var Repeat = (string)Request.Form.Repeat;
-            var Email = (string)Request.Form.Email;
+            var username = (string)Request.Form.Username;
+            var oldPassword = (string)Request.Form.OldPassword;
+            var newPassword = (string)Request.Form.NewPassword;
+            var repeat = (string)Request.Form.Repeat;
+            var email = (string)Request.Form.Email;
 
-            string message = "changes saved";
+            var message = "Changes saved";
 
             dynamic model = new ExpandoObject();
             model.Errored = Request.Query.error.HasValue;
@@ -58,9 +57,8 @@ namespace BrettPit.Controller
             model.UserId = currentUser.Id;
             model.UserIsAdmin = currentUser.IsAdmin;
             model.UserEmail = currentUser.Email;
-            model.Message = message;
 
-            if (string.IsNullOrEmpty(Username) || string.IsNullOrEmpty(Email) || NewPassword != Repeat)
+            if (string.IsNullOrEmpty(username) || string.IsNullOrEmpty(email) || newPassword != repeat)
             {
                 //return Context.GetRedirect("~/login?repeatError=true");
                 //error message
@@ -68,7 +66,7 @@ namespace BrettPit.Controller
             }
             else
             {
-                if (OldPassword.CalculateMd5Hash() != currentUser.Password)
+                if (oldPassword.CalculateMd5Hash() != currentUser.Password)
                 {
                     //error message
                     message = "Password wrong";
@@ -76,18 +74,21 @@ namespace BrettPit.Controller
                 else
                 {
                     //no errors detected
-                    if(string.IsNullOrEmpty(NewPassword))
+                    if(string.IsNullOrEmpty(newPassword))
                     {
-                        if (!UserSetting.ChangeNameAndEmail(currentUser.Id, Username, Email))
-                            message = "userdata could not be saved";
+                        if (!UserSetting.ChangeNameAndEmail(currentUser.Id, username, email))
+                            message = "Userdata could not be saved";
                     }
                     else
                     {
-                        if (!UserSetting.ChangePassword(currentUser.Id, NewPassword))
-                            message = "password could not be changed";
+                        if (!UserSetting.ChangePassword(currentUser.Id, newPassword))
+                            message = "Password could not be changed";
                     }
                 }
             }
+
+            model.Message = message;
+
             return View["user", model];
         }
 
@@ -96,13 +97,9 @@ namespace BrettPit.Controller
             //User Information for Navigation
             var currentUser = (UserModel)Context.CurrentUser;
 
-            var Username = (string)Request.Form.Username;
-            var OldPassword = (string)Request.Form.OldPassword;
-            var NewPassword = (string)Request.Form.NewPassword;
-            var Repeat = (string)Request.Form.Repeat;
-            var Email = (string)Request.Form.Email;
+            var oldPassword = (string)Request.Form.OldPassword;
 
-            string message = "";
+            var message = string.Empty;
 
             dynamic model = new ExpandoObject();
             model.Errored = Request.Query.error.HasValue;
@@ -114,27 +111,26 @@ namespace BrettPit.Controller
             model.UserEmail = currentUser.Email;
             model.Message = message;
 
-            if (OldPassword.CalculateMd5Hash() != currentUser.Password)
+            if (oldPassword.CalculateMd5Hash() != currentUser.Password)
             {
                 //error message
-                message = "wrong password";
+                message = "Wrong password";
             }
             else
             {
                 if (!UserSetting.DeleteAccount(currentUser.Id))
-                    message = "account could not be deleted";
+                    message = "Account could not be deleted";
             }
-            if(message == "")
+
+            if (message == string.Empty)
             {
                 //deletion successful -> redirect to the login page
                 return Context.GetRedirect("~/login");
             }
-            else
-            {
-                //deletion unsuccessful -> show the user view with the error message
-                model.Message = message;
-                return View["user", model];
-            }
+            
+            //deletion unsuccessful -> show the user view with the error message
+            model.Message = message;
+            return View["user", model];
         }
     }
 }
