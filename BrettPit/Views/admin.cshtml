@@ -81,19 +81,19 @@
                                 {
                                     <tr>
                                         <td class="brettpit-admin-table-usercol">
-                                            <label class="brettpit-label-admin-users" name="Username"> @user.name </label>
+                                            <label class="brettpit-label-admin-users" name="Username"> @user.UserName </label>
                                         </td>
                                         <td class="brettpit-admin-table-admincol">
-                                            <input class="brettpit-checkbox-admin-users" name="Username" type="checkbox" checked="@user.isadmin" />
+                                            <input class="brettpit-checkbox-admin-users" name="Username" type="checkbox" checked="@user.IsAdmin" />
                                         </td>
                                         <td class="brettpit-admin-table-deletecol">
                                             <form method="post" action="">
-                                                <button  class="brettpit-button-admin-users-delete" name="DeleteUser" type="submit" value="@user.id" formaction="~/administration/delete" onclick="return confirm('Are you sure?')">delete</button>
+                                                <button  class="brettpit-button-admin-users-delete" name="DeleteUser" type="submit" value="@user.Id" formaction="~/administration/delete" onclick="return confirm('Are you sure?')">delete</button>
                                             </form>
                                         </td>
                                         <td class="brettpit-admin-table-resetpwcol">
                                             <form method="post" action="">
-                                                <button class="brettpit-button-admin-users-resetpw" name="Username" type="submit" value="@user.id" formaction="~/administration/resetpw" onclick="return confirm('Are you sure?')">reset</button>
+                                                <button class="brettpit-button-admin-users-resetpw" name="Username" type="submit" value="@user.Id" formaction="~/administration/resetpw" onclick="return confirm('Are you sure?')">reset</button>
                                             </form>
                                         </td>
                                     </tr>
@@ -126,14 +126,14 @@
                                     {
                                     <tr>
                                         <td class="brettpit-admin-table-usercol">
-                                            <label class="brettpit-label-admin-users" name="Username"> @game.name </label>
+                                            <label class="brettpit-label-admin-users" name="gamename"> @game.Name </label>
                                         </td>
                                         <td class="brettpit-admin-table-admincol">
-                                            <input class="brettpit-checkbox-admin-users" name="Username" type="checkbox" checked="@game.description" />
+                                            <label class="brettpit-label-admin-users" name="gamedescription"> @game.Description </label>
                                         </td>
                                         <td class="brettpit-admin-table-deletecol">
                                             <form method="post" action="">
-                                                <button class="brettpit-button-admin-users-delete" name="DeleteGame" type="submit" value="@game.id" formaction="~/administration/delete" onclick="return confirm('Are you sure?')">delete</button>
+                                                <button class="brettpit-button-admin-users-delete" name="DeleteGame" type="submit" value="@game.Id" formaction="~/administration/delete" onclick="return confirm('Are you sure?')">delete</button>
                                             </form>
                                         </td>
                                     </tr>

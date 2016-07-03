@@ -159,6 +159,44 @@ namespace BrettPit.BusinessLogic
             return result;
         }
 
+        public static bool ResetPassword(int uid)
+        {
+            bool result;
+
+            try
+            {
+                using (var userDb = new DataAccessContext())
+                {
+                    var userRecord = userDb.users.Find(uid);
+                    if (userRecord != null)
+                    {
+                        var newPassword = GetRandomPassword(32);
+                        //email senden
+                        result = EmailUtil.SendPasswordEmail(userRecord.email, newPassword);
+                        if (result)
+                        {
+                            //nur wenn die email gesendet werden konnte, neues PW in DB schreiben
+                            userRecord.password = newPassword.CalculateMd5Hash();
+                            //notwendig???
+                            userDb.Entry(userRecord).State = System.Data.Entity.EntityState.Modified;
+                            userDb.SaveChanges();
+                        }
+                    }
+                    else
+                    {
+                        result = false;
+                    }
+                }
+            }
+            catch (Exception)
+            {
+                //TODO: Log exception to log
+                result = false;
+            }
+
+            return result;
+        }
+
         public static bool ChangeNameAndEmail(int userid, string NewUsername, string NewUseremail)
         {
             bool result;

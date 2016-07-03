@@ -35,7 +35,7 @@ namespace BrettPit.Controller
 
             //alle User holen
             model.AllUsers = UserSetting.All();
-            //model.AllGames = GamesSetting.GetAll();
+            model.AllGames = GamesSetting.GetAll();
 
             return View["admin", model];
         }
@@ -60,7 +60,7 @@ namespace BrettPit.Controller
 
             //alle User holen
             model.AllUsers = UserSetting.All();
-            //model.AllGames = GamesSetting.GetAll();
+            model.AllGames = GamesSetting.GetAll();
 
             return View["admin", model];
         }
