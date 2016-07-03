@@ -20,16 +20,17 @@ namespace BrettPit.BusinessLogic
                         Opponent = match.users.name,
                         Player = match.users1.name,
                         Result = match.result,
-                        Status = match.status1,
-                        Date = match.timestamp
+                        Status1 = match.status1,
+                        Date = match.timestamp,
+                        OwnMatch = match.uid2 == uid
                     }).ToList().Select(match => new MatchModel
                     {
                         Id = match.Id,
                         Game = match.Game,
                         Opponent = match.Opponent,
                         Player = match.Player,
-                        Result = GetResult(match.Result),
-                        Status = GetStatus(match.Status),
+                        Result = GetResult(match.Result, match.OwnMatch),
+                        Status = GetStatus(match.Status1, match.OwnMatch),
                         Date = match.Date
                     }).OrderByDescending(match => match.Date) ;
 
@@ -37,9 +38,27 @@ namespace BrettPit.BusinessLogic
             }
         }
 
-        private static string GetStatus(int match)
+        private static string GetStatus(int status1, bool ownMatch)
         {
-            switch (match)
+            if (ownMatch)
+            {
+                if (status1 == 0)
+                {
+                    return "Decision awaited";
+                }
+
+                if (status1 == 1)
+                {
+                    return "Accepted";
+                }
+
+                if (status1 == 2)
+                {
+                    return "Declined";
+                }
+            }
+
+            switch (status1)
             {
                 case 0:
                     return "Open";
@@ -52,16 +71,29 @@ namespace BrettPit.BusinessLogic
             return string.Empty;
         }
 
-        private static string GetResult(int match)
+        private static string GetResult(int match, bool ownMatch)
         {
+            if (ownMatch)
+            {
+                switch (match)
+                {
+                    case 0:
+                        return "Draw";
+                    case 1:
+                        return "You lost";
+                    case 2:
+                        return "You won";
+                }
+            }
+
             switch (match)
             {
                 case 0:
                     return "Draw";
                 case 1:
-                    return "Opponent won";
-                case 2:
                     return "You won";
+                case 2:
+                    return "You lost";
             }
 
             return string.Empty;
@@ -89,6 +121,7 @@ namespace BrettPit.BusinessLogic
                 var pairing = new pairings
                 {
                     status1 = 0,
+                    status2 = 1,
                     game_system_id = gameId,
                     result = result,
                     timestamp = DateTime.Now,
@@ -98,6 +131,17 @@ namespace BrettPit.BusinessLogic
                 db.pairings.Add(pairing);
                 db.SaveChanges();
             }
+        }
+
+        public static pairings Get(int matchId)
+        {
+            pairings model;
+            using (var db = new DataAccessContext())
+            {
+                model = db.pairings.Single(dbMatch => dbMatch.id == matchId);
+            }
+
+            return model;
         }
     }
 }
