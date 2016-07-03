@@ -118,3 +118,10 @@ input[type=submit] {
 #login-form:target, #register-form:target {
     visibility: visible;
 }
+
+.floatingError {
+    color: red;
+    border: 1px solid red;
+    padding: 5px;
+    width: 90%;
+}

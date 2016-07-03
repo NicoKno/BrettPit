@@ -34,10 +34,6 @@
                             <a href="~/resetpwd">Reset password</a>
                         </form>
                     </div>
-                    @if (Model.Errored)
-                    {
-                        <div id="errorBox" class="floatingError">Invalid Username or Password</div>
-                    }
 
                     <div id="register-form" class="brettpit-content-box">
                         <form method="POST" action="">
@@ -53,17 +49,7 @@
                         </form>
                     </div>
 
-                    @if (Model.RegisterErrored)
-                    {
-                        <div id="registerErrorBox" class="floatingError">
-                            Registration failed. Please note the following:
-                            <ul>
-                                <li>Type in a valid user name</li>
-                                <li>Type in a valid email</li>
-                                <li>The two password strings must match</li>
-                            </ul>
-                        </div>
-                    }
+
                 </div>
             </div>
         </div>
@@ -75,6 +61,23 @@
             systems.
             <br/><br/>
             Please register for free or login.
+            <br /><br />
+            @if (Model.RegisterErrored)
+            {
+                <div id="registerErrorBox" class="floatingError">
+                    Registration failed. Please note the following:
+                    <ul>
+                        <li>Type in a valid user name</li>
+                        <li>Type in a valid email</li>
+                        <li>The two password strings must match</li>
+                    </ul>
+                </div>
+            }
+
+            @if (Model.Errored)
+            {
+                <div id="errorBox" class="floatingError">Invalid Username or Password</div>
+            }
         </div>
     </div>
 

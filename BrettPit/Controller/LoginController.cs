@@ -24,7 +24,7 @@ namespace BrettPit.Controller
             var repeat = (string) Request.Form.Repeat;
             var email = (string) Request.Form.Email;
 
-            if (string.IsNullOrEmpty(username) || string.IsNullOrEmpty(email) || password != repeat)
+            if (string.IsNullOrEmpty(username) || string.IsNullOrEmpty(email) || string.IsNullOrEmpty(password) || password != repeat)
             {
                 return Context.GetRedirect("~/login?repeatError=true");
             }

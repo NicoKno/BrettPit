@@ -4,7 +4,6 @@ using Nancy.Security;
 using BrettPit.BusinessLogic;
 using System.Dynamic;
 using System.Linq;
-using System.Runtime.CompilerServices;
 using BrettPit.Models;
 using Nancy.ModelBinding;
 
