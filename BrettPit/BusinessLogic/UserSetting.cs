@@ -39,7 +39,7 @@ namespace BrettPit.BusinessLogic
 
             using (var db = new DataAccessContext())
             {
-                var dbUser = db.users.FirstOrDefault(user => user.name == name && user.password == password);
+                var dbUser = db.users.FirstOrDefault(user => (user.name == name || user.email == name) && user.password == password);
 
                 if (dbUser != null)
                 {

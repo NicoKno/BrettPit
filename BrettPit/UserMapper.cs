@@ -20,10 +20,7 @@ namespace BrettPit
         {
             var userRecord = UserSetting.Get(username, password);
 
-            if (userRecord == null)
-                return null;
-            else
-                return userRecord.LoginGuid;
+            return userRecord?.LoginGuid;
         }
 
         public static Guid? CreateUser(string username, string password, string email)
