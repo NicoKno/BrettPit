@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using BrettPit.DataAccess;
 using BrettPit.Models;
@@ -64,6 +65,39 @@ namespace BrettPit.BusinessLogic
             }
 
             return string.Empty;
+        }
+
+        public static void ChangeMatchState(int gameId, int matchId, int status)
+        {
+            using (var db = new DataAccessContext())
+            {
+                var acceptedMatch = db.pairings.FirstOrDefault(match => match.id == matchId);
+
+                if (acceptedMatch != null)
+                {
+                    acceptedMatch.status1 = status;
+                    db.Entry(acceptedMatch).State = System.Data.Entity.EntityState.Modified;
+                    db.SaveChanges();
+                }
+            }
+        }
+
+        public static void Save(int opponentId, int result, int currentUserId, int gameId)
+        {
+            using (var db = new DataAccessContext())
+            {
+                var pairing = new pairings
+                {
+                    status1 = 0,
+                    game_system_id = gameId,
+                    result = result,
+                    timestamp = DateTime.Now,
+                    uid1 = opponentId,
+                    uid2 = currentUserId
+                };
+                db.pairings.Add(pairing);
+                db.SaveChanges();
+            }
         }
     }
 }

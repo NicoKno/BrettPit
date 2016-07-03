@@ -116,8 +116,10 @@
     <Reference Include="System.EnterpriseServices" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Content\Images\accept.png" />
     <Content Include="Content\Images\brettpit_logo2_big.png" />
     <Content Include="Content\Images\brettpit_onlyfont.png" />
+    <Content Include="Content\Images\decline.png" />
     <Content Include="Content\Images\games.png" />
     <Content Include="Content\Images\security.png" />
     <Content Include="Content\Images\user.png" />
@@ -138,6 +140,11 @@
       <DependentUpon>DataAccessModel.edmx</DependentUpon>
     </Content>
     <Content Include="Content\Styles\site.css" />
+    <None Include="Content\Scripts\jquery-3.0.0.intellisense.js" />
+    <Content Include="Content\Scripts\jquery-3.0.0.js" />
+    <Content Include="Content\Scripts\jquery-3.0.0.min.js" />
+    <Content Include="Content\Scripts\jquery-3.0.0.slim.js" />
+    <Content Include="Content\Scripts\jquery-3.0.0.slim.min.js" />
     <Content Include="Views\login.cshtml" />
     <Content Include="Views\games.cshtml" />
     <Content Include="Views\game.cshtml" />
@@ -145,6 +152,9 @@
     <Content Include="Views\navigation.cshtml" />
     <None Include="Properties\PublishProfiles\IIS.pubxml" />
     <Content Include="Views\user.cshtml" />
+    <Content Include="Content\Scripts\jquery-3.0.0.slim.min.map" />
+    <Content Include="Content\Scripts\jquery-3.0.0.min.map" />
+    <Content Include="Views\search.cshtml" />
     <Content Include="Views\admin.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
@@ -210,6 +220,7 @@
     <Compile Include="DataAccess\pairings.cs">
       <DependentUpon>DataAccessModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\MatchUserResultModel.cs" />
     <Compile Include="Models\UserModel.cs" />
     <Compile Include="Models\UserScoreModel.cs" />
     <Compile Include="NancyBootstrapper.cs" />
