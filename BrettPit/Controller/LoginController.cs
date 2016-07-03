@@ -29,6 +29,16 @@ namespace BrettPit.Controller
                 return Context.GetRedirect("~/login?repeatError=true");
             }
 
+            if (UserSetting.UsernameExists(username))
+            {
+                return Context.GetRedirect("~/login?userNameExists=true");
+            }
+
+            if (UserSetting.EmailExists(email))
+            {
+                return Context.GetRedirect("~/login?emailExists=true");
+            }
+
             var userGuid = UserMapper.CreateUser(username, password, email);
 
             if (userGuid == null)
@@ -44,6 +54,9 @@ namespace BrettPit.Controller
             dynamic model = new ExpandoObject();
             model.Errored = Request.Query.error.HasValue;
             model.RegisterErrored = Request.Query.repeatError.HasValue;
+            model.UsernameExists = Request.Query.userNameExists.HasValue;
+            model.EmailExists = Request.Query.emailExists.HasValue;
+
             return View["login", model];
         }
 

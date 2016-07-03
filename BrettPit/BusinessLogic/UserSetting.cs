@@ -295,5 +295,29 @@ namespace BrettPit.BusinessLogic
 
             return result;
         }
+
+        public static bool UsernameExists(string username)
+        {
+            bool result;
+
+            using (var db = new DataAccessContext())
+            {
+                result = db.users.Any(dbUser => dbUser.name == username);
+            }
+
+            return result;
+        }
+
+        public static bool EmailExists(string email)
+        {
+            bool result;
+
+            using (var db = new DataAccessContext())
+            {
+                result = db.users.Any(dbUser => dbUser.email == email);
+            }
+
+            return result;
+        }
     }
 }

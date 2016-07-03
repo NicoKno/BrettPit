@@ -64,7 +64,7 @@
             <br /><br />
             @if (Model.RegisterErrored)
             {
-                <div id="registerErrorBox" class="floatingError">
+                <div class="floatingError">
                     Registration failed. Please note the following:
                     <ul>
                         <li>Type in a valid user name</li>
@@ -76,7 +76,17 @@
 
             @if (Model.Errored)
             {
-                <div id="errorBox" class="floatingError">Invalid Username or Password</div>
+                <div class="floatingError">Invalid Username or Password</div>
+            }
+
+            @if (Model.UsernameExists)
+            {
+                <div class="floatingError">Username already exists</div>
+            }
+
+            @if (Model.EmailExists)
+            {
+                <div class="floatingError">Emailaddress already exists</div>
             }
         </div>
     </div>
