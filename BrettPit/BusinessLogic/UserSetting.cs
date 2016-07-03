@@ -58,22 +58,36 @@ namespace BrettPit.BusinessLogic
             return resultUser;
         }
 
-        public static IEnumerable<UserModel> All()
+        public static IEnumerable<users> All()
         {
+            /*var query = db.game_systems
+                    .Where(game => game.pairings.Any(match => match.uid1 == uid || match.uid2 == uid))
+                    .Select(game => new GameModel
+                    {
+                        Id = game.id,
+                        Name = game.name,
+                        Description = game.description
+                    }).Distinct();
+
+                resultGames = query.ToList();*/
+            IEnumerable<users> resultUsers;
             using (var db = new DataAccessContext())
             {
-                var dbUsers = db.users.Select(user => new UserModel
-                {
-                    Id = user.id,
-                    UserName = user.name,
-                    Password = user.password,
-                    Email = user.email,
-                    IsAdmin = user.isadmin,
-                    LoginGuid = Guid.Parse(user.loginid)
-                });
+                //var dbUsers = db.users.Select(user => new UserModel
+                //{
+                //    Id = user.id,
+                //    UserName = user.name,
+                //    Password = user.password,
+                //    Email = user.email,
+                //    IsAdmin = user.isadmin,
+                //    LoginGuid = Guid.Parse(user.loginid)
+                //});
 
-                return dbUsers;
+                resultUsers = db.users.ToList();
+
+
             }
+            return resultUsers;
         }
 
         public static bool Save(UserModel user)
@@ -134,6 +148,44 @@ namespace BrettPit.BusinessLogic
                         var newPassword = GetRandomPassword(32);
                         //email senden
                         result = EmailUtil.SendPasswordEmail(email, newPassword);
+                        if (result)
+                        {
+                            //nur wenn die email gesendet werden konnte, neues PW in DB schreiben
+                            userRecord.password = newPassword.CalculateMd5Hash();
+                            //notwendig???
+                            userDb.Entry(userRecord).State = System.Data.Entity.EntityState.Modified;
+                            userDb.SaveChanges();
+                        }
+                    }
+                    else
+                    {
+                        result = false;
+                    }
+                }
+            }
+            catch (Exception)
+            {
+                //TODO: Log exception to log
+                result = false;
+            }
+
+            return result;
+        }
+
+        public static bool ResetPassword(int uid)
+        {
+            bool result;
+
+            try
+            {
+                using (var userDb = new DataAccessContext())
+                {
+                    var userRecord = userDb.users.Find(uid);
+                    if (userRecord != null)
+                    {
+                        var newPassword = GetRandomPassword(32);
+                        //email senden
+                        result = EmailUtil.SendPasswordEmail(userRecord.email, newPassword);
                         if (result)
                         {
                             //nur wenn die email gesendet werden konnte, neues PW in DB schreiben

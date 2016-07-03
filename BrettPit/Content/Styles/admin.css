@@ -1,0 +1,62 @@
+﻿
+.brettpit-admin-usersbox{
+    width: 440px;
+    overflow-x: hidden;
+    overflow-y: auto;
+    float: left;
+    /*background-color: blue;*/
+}
+
+.brettpit-admin-gamesbox{
+    width: 440px;
+    overflow-x: hidden;
+    overflow-y: auto;
+    float: right;
+    /*background-color: green;*/
+}
+
+.brettpit-admin-users-table{
+    float: left;
+    height: 200px;
+    width: 437px;
+    overflow-x: hidden;
+    overflow-y: auto;
+}
+
+.brettpit-admin-games-table{
+    float: right;
+    height: 200px;
+    width: 437px;
+    overflow-x: hidden;
+    overflow-y: auto;
+}
+
+.brettpit-label-admin-users {
+    padding: 2px;
+    margin: auto;
+    width: 100%;;
+}
+
+.brettpit-button-admin-users-delete {
+    padding: 2px;
+    margin: auto;
+    width: 100%;
+    background-color: red;
+}
+
+.brettpit-button-admin-users-resetpw {
+    padding: 2px;
+    margin: auto;
+    width: 100%;
+    background-color: yellow;
+}
+
+.brettpit-checkbox-admin-users {
+    padding: 2px;
+    margin: auto;
+    width: auto;
+}
+
+.brettpit-textbox-admin-users{
+    margin-bottom: 5px;
+}
