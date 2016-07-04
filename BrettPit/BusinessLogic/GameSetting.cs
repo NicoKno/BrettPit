@@ -56,5 +56,87 @@ namespace BrettPit.BusinessLogic
                 return dbGames;
             }
         }
+
+        public static bool DeleteGame(int gameid)
+        {
+            bool result;
+
+            try
+            {
+                //deleting the corresponding datasets in table "pairings"
+                using (var GameDb = new DataAccessContext())
+                {
+                    GameDb.game_systems.Remove(GameDb.game_systems.Find(gameid));
+                    GameDb.SaveChanges();
+                }
+                result = true;
+            }
+            catch
+            {
+                //TODO: Log exception to log
+                result = false;
+            }
+            return result;
+        }
+
+        public static bool ChangeGame(int gameid, string NewName, string NewDescription)
+        {
+            bool result;
+
+            try
+            {
+                using (var GameDb = new DataAccessContext())
+                {
+                    var gameRecord = GameDb.game_systems.Find(gameid);
+                    if (gameRecord != null)
+                    {
+                        gameRecord.name = NewName;
+                        gameRecord.description = NewDescription;
+                        GameDb.Entry(gameRecord).State = System.Data.Entity.EntityState.Modified;
+                        GameDb.SaveChanges();
+                        result = true;
+                    }
+                    else
+                    {
+                        result = false;
+                    }
+                }
+            }
+            catch
+            {
+                //TODO: Log exception to log
+                result = false;
+            }
+
+            return result;
+        }
+
+        public static bool AddGame(string NewName, string NewDescription)
+        {
+            bool result;
+
+            try
+            {
+                using (var GameDb = new DataAccessContext())
+                {
+                    var newGame = new game_systems
+                    {
+                        name = NewName,
+                        description = NewDescription
+                    };
+
+                    var gameRecord = GameDb.game_systems.Add(newGame);
+                    GameDb.SaveChanges();
+                    result = true;
+                }
+            }
+            catch
+            {
+                //TODO: Log exception to log
+                result = false;
+            }
+
+            return result;
+        }
     }
 }

@@ -62,7 +62,7 @@ namespace BrettPit.Controller
             {
                 //return Context.GetRedirect("~/login?repeatError=true");
                 //error message
-                message = "Username and Email must not be empty";
+                message = "Username and Email must not be empty, new password and repeat must be the same";
             }
             else
             {

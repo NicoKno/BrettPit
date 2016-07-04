@@ -8,142 +8,125 @@
 
     <title>user settings</title>
     @inherits Nancy.ViewEngines.Razor.NancyRazorViewBase<dynamic>
-    <script>
-        function sendDelRequest(uid)
-        {
-            // Browserkompatibles Request-Objekt erzeugen:
-            r = null;
-            
-            if(window.XMLHttpRequest)
-            {
-                r = new XMLHttpRequest();
-            }
-            else if(window.ActiveXObject)
-            {
-                try
-                {
-                    r = new ActiveXObject('Msxml2.XMLHTTP');
-                }
-                catch(e1)
-                {
-                    try
-                    {
-                        r = new ActiveXObject('Microsoft.XMLHTTP');
-                    }
-                    catch(e2)
-                    {
-                        alert("Request nicht möglich");
-                    }
-                }	
-            }
-            if(r != null)
-            {
-                alert("post");
-                // HTTP-POST
-                r.open('POST', '~/administration/delete', true);
-                r.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-                r.send('uid='+uid);
-            }
-
-        }
-        function sendNewpwRequest(uid) {
-            alert(uid);
-        }
-    </script>
 </head>
 <body>
     @Html.Partial("navigation", Model)
     <div class="brettpit-content-container">
         <div class="brettpit-boxwrap">
             <div id="admin-form" class="brettpit-content-box">
-                <div class="brettpit-admin-usersbox">
-                    <input id="tbSearchUser" class="brettpit-textbox-admin-users" placeholder="search for user" type="search" />
-                    <div class="brettpit-admin-users-table">
-                        <table style="width:100%;" border="1" id="tableUser">
-                            <thead>
-                                <tr>
-                                    <th class="brettpit-admin-table-usercol">
-                                        user
-                                    </th>
-                                    <th class="brettpit-admin-table-admincol">
-                                        Is Admin
-                                    </th>
-                                    <th class="brettpit-admin-table-deletecol">
-                                        Delete
-                                    </th>
-                                    <th class="brettpit-admin-table-resetpwcol">
-                                        Reset Password
-                                    </th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                @foreach (var user in Model.AllUsers)
-                                {
+                @if (Model.permission)
+                {
+                    <div class="brettpit-admin-usersbox">
+                        <input id="tbSearchUser" class="brettpit-textbox-admin-users" placeholder="search for user" type="search" />
+                        <div class="brettpit-admin-users-table">
+                            <table style="width:100%;" border="1" id="tableUser">
+                                <thead>
                                     <tr>
-                                        <td class="brettpit-admin-table-usercol">
-                                            <label class="brettpit-label-admin-users" name="Username"> @user.UserName </label>
-                                        </td>
-                                        <td class="brettpit-admin-table-admincol">
-                                            <input class="brettpit-checkbox-admin-users" name="Username" type="checkbox" checked="@user.IsAdmin" />
-                                        </td>
-                                        <td class="brettpit-admin-table-deletecol">
-                                            <form method="post" action="">
-                                                <button  class="brettpit-button-admin-users-delete" name="DeleteUser" type="submit" value="@user.Id" formaction="~/administration/delete" onclick="return confirm('Are you sure?')">delete</button>
-                                            </form>
-                                        </td>
-                                        <td class="brettpit-admin-table-resetpwcol">
-                                            <form method="post" action="">
-                                                <button class="brettpit-button-admin-users-resetpw" name="Username" type="submit" value="@user.Id" formaction="~/administration/resetpw" onclick="return confirm('Are you sure?')">reset</button>
-                                            </form>
-                                        </td>
+                                        <th>
+                                            user
+                                        </th>
+                                        <th>
+                                            Is Admin
+                                        </th>
+                                        <th>
+                                            Delete
+                                        </th>
+                                        <th>
+                                            Reset Password
+                                        </th>
                                     </tr>
-
-                                }
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-                <div class="brettpit-admin-gamesbox">
-                    <input class="brettpit-textbox-admin-users" placeholder="search for games" type="search" />
-                    <div class="brettpit-admin-games-table">
-                        <table style="width:100%;" border="1">
-                            <thead>
-                                <tr>
-                                    <th>
-                                        Tabletop Name
-                                    </th>
-                                    <th>
-                                        Description
-                                    </th>
-                                    <th>
-                                        Delete
-                                    </th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    @foreach (var game in Model.AllGames)
+                                </thead>
+                                <tbody>
+                                    @foreach (var user in Model.AllUsers)
                                     {
-                                    <tr>
-                                        <td class="brettpit-admin-table-usercol">
-                                            <label class="brettpit-label-admin-users" name="gamename"> @game.Name </label>
-                                        </td>
-                                        <td class="brettpit-admin-table-admincol">
-                                            <label class="brettpit-label-admin-users" name="gamedescription"> @game.Description </label>
-                                        </td>
-                                        <td class="brettpit-admin-table-deletecol">
-                                            <form method="post" action="">
-                                                <button class="brettpit-button-admin-users-delete" name="DeleteGame" type="submit" value="@game.Id" formaction="~/administration/delete" onclick="return confirm('Are you sure?')">delete</button>
-                                            </form>
-                                        </td>
-                                    </tr>
+                                        <tr>
+                                            <td>
+                                                <label class="brettpit-label-admin-users" name="Username"> @user.UserName </label>
+                                            </td>
+                                            <td>
+                                                <input class="brettpit-checkbox-admin-users" name="Username" type="checkbox" checked="@user.IsAdmin" />
+                                            </td>
+                                            <td>
+                                                <form method="post" action="">
+                                                    <button class="brettpit-button-admin-delete" name="DeleteUser" type="submit" value="@user.Id" formaction="~/administration/deleteuser" onclick="return confirm('Are you sure?')">delete</button>
+                                                </form>
+                                            </td>
+                                            <td>
+                                                <form method="post" action="">
+                                                    <button class="brettpit-button-admin-change" name="Username" type="submit" value="@user.Id" formaction="~/administration/resetpw" onclick="return confirm('Are you sure?')">reset</button>
+                                                </form>
+                                            </td>
+                                        </tr>
 
                                     }
-                                </tr>
-                            </tbody>
-                        </table>
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
-                </div>
+                    <div class="brettpit-admin-gamesbox">
+                        <input class="brettpit-textbox-admin-users" placeholder="search for games" type="search" />
+                        <div class="brettpit-admin-games-table">
+                            <table style="width:100%;" border="1" align="left">
+                                <thead>
+                                    <tr>
+                                        <th>
+                                            Tabletop Name
+                                        </th>
+                                        <th>
+                                            Description
+                                        </th>
+                                        <th>
+                                            Edit
+                                        </th>
+                                        <th>
+                                            Delete
+                                        </th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var game in Model.AllGames)
+                                    {
+                                        <tr>
+                                            <form method="post" action="">
+                                                <td class="brettpit-admin-table-usercol">
+                                                    <input name="gamename" value="@game.Name" class="brettpit-textbox-admin-games">
+                                                </td>
+                                                <td class="brettpit-admin-table-admincol">
+                                                    <input name="gamedescription" value="@game.Description" class="brettpit-textbox-admin-games">
+                                                </td>
+                                                <td class="brettpit-admin-table-deletecol">
+                                                    <button class="brettpit-button-admin-change" name="ChangeGame" type="submit" value="@game.Id" formaction="~/administration/changegame" >save</button>
+                                                </td>
+                                            </form>
+                                            <td class="brettpit-admin-table-deletecol">
+                                                <form method="post" action="">
+                                                    <button class="brettpit-button-admin-delete" name="DeleteGame" type="submit" value="@game.Id" formaction="~/administration/deletegame" onclick="return confirm('Are you sure?')">delete</button>
+                                                </form>
+                                            </td>
+                                        </tr>
+                                    }
+                                    <tr>
+                                        <form method="post" action="">
+                                            <td>
+                                                <input class="brettpit-textbox-admin-games" name="addGameName" placeholder="new game">
+                                            </td>
+                                            <td>
+                                                <input class="brettpit-textbox-admin-games" name="addGameDesc" placeholder="description">
+                                            </td>
+                                            <td colspan="2">
+                                                <button id="Addgame" class="brettpit-button-admin-addgame" name="AddGame" type="submit" formaction="~/administration/addgame">Add</button>
+                                            </td>
+                                        </form>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                }
+                else
+                {
+                    <label>permission denied</label>
+                }
             </div>
         </div>
     </div>
