@@ -13,7 +13,7 @@ namespace BrettPit.BusinessLogic
 
             using (var db = new DataAccessContext())
             {
-                var dbGame = db.game_systems.Find(1);
+                var dbGame = db.game_systems.Find(gameId);
 
                 if (dbGame != null)
                 {
