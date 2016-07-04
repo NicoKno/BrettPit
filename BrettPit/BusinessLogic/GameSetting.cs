@@ -64,6 +64,19 @@ namespace BrettPit.BusinessLogic
             try
             {
                 //deleting the corresponding datasets in table "pairings"
+                using (var matchDb = new DataAccessContext())
+                {
+                    matchDb.pairings.RemoveRange(matchDb.pairings.Where(match => match.game_system_id == gameid));
+                    matchDb.SaveChanges();
+                }
+
+                //deleting the corresponding datasets in table "elos"
+                using (var eloDb = new DataAccessContext())
+                {
+                    eloDb.eloes.RemoveRange(eloDb.eloes.Where(elo => elo.gid == gameid));
+                    eloDb.SaveChanges();
+                }
+                //deleting the corresponding datasets in table "game_systems"
                 using (var GameDb = new DataAccessContext())
                 {
                     GameDb.game_systems.Remove(GameDb.game_systems.Find(gameid));
