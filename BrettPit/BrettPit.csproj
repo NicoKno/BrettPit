@@ -156,6 +156,8 @@
     <Content Include="Content\Scripts\jquery-3.0.0.min.map" />
     <Content Include="Views\search.cshtml" />
     <Content Include="Views\admin.cshtml" />
+    <Content Include="Views\searchUser.cshtml" />
+    <Content Include="Views\searchGame.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

@@ -5,9 +5,34 @@
     <link href="@Url.Content("~/Content/Styles/site.css")" rel="stylesheet" type="text/css" />
     <link href="@Url.Content("~/Content/Styles/admin.css")" rel="stylesheet" type="text/css" />
     <link href="@Url.Content("~/Content/Styles/navigation.css")" rel="stylesheet" type="text/css" />
+    <script src="@Url.Content("~/Content/Scripts/jquery-3.0.0.min.js")"></script>
 
     <title>user settings</title>
     @inherits Nancy.ViewEngines.Razor.NancyRazorViewBase<dynamic>
+
+    <script>
+        window.onload = function () {
+            //document.getElementById("brettpit-searchbox").focus();
+            search();
+        }
+
+        var oldVal = undefined;
+        function search() {
+            var searchTerm = $("#tbSearchUser").val();
+            if (searchTerm === oldVal) {
+                return;
+            }
+
+            oldVal = searchTerm;
+
+            $.get("/administration/searchUser?searchTerm=" + searchTerm).done(function (data) {
+                $("#partialPlaceHolderUser").html(data);
+            }).fail(function (error) {
+                console.log(error);
+            });
+        }
+
+    </script>
 </head>
 <body>
     @Html.Partial("navigation", Model)
@@ -17,51 +42,8 @@
                 @if (Model.permission)
                 {
                     <div class="brettpit-admin-usersbox">
-                        <input id="tbSearchUser" class="brettpit-textbox-admin-users" placeholder="search for user" type="search" />
-                        <div class="brettpit-admin-users-table">
-                            <table style="width:100%;" border="1" id="tableUser">
-                                <thead>
-                                    <tr>
-                                        <th>
-                                            user
-                                        </th>
-                                        <th>
-                                            Is Admin
-                                        </th>
-                                        <th>
-                                            Delete
-                                        </th>
-                                        <th>
-                                            Reset Password
-                                        </th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    @foreach (var user in Model.AllUsers)
-                                    {
-                                        <tr>
-                                            <td>
-                                                <label class="brettpit-label-admin-users" name="Username"> @user.UserName </label>
-                                            </td>
-                                            <td>
-                                                <input class="brettpit-checkbox-admin-users" name="Username" type="checkbox" checked="@user.IsAdmin" />
-                                            </td>
-                                            <td>
-                                                <form method="post" action="">
-                                                    <button class="brettpit-button-admin-delete" name="DeleteUser" type="submit" value="@user.Id" formaction="~/administration/deleteuser" onclick="return confirm('Are you sure?')">delete</button>
-                                                </form>
-                                            </td>
-                                            <td>
-                                                <form method="post" action="">
-                                                    <button class="brettpit-button-admin-change" name="Username" type="submit" value="@user.Id" formaction="~/administration/resetpw" onclick="return confirm('Are you sure?')">reset</button>
-                                                </form>
-                                            </td>
-                                        </tr>
-
-                                    }
-                                </tbody>
-                            </table>
-                        </div>
+                        <input id="tbSearchUser" class="brettpit-textbox-admin-users" placeholder="search for user" type="text" onkeyup="search()" autocomplete="off" />
+                        <div id="partialPlaceHolderUser" class="brettpit-admin-users-table"></div>
                     </div>
                     <div class="brettpit-admin-gamesbox">
                         <input class="brettpit-textbox-admin-users" placeholder="search for games" type="search" />
@@ -95,7 +77,7 @@
                                                     <input name="gamedescription" value="@game.Description" class="brettpit-textbox-admin-games">
                                                 </td>
                                                 <td class="brettpit-admin-table-deletecol">
-                                                    <button class="brettpit-button-admin-change" name="ChangeGame" type="submit" value="@game.Id" formaction="~/administration/changegame" >save</button>
+                                                    <button class="brettpit-button-admin-change" name="ChangeGame" type="submit" value="@game.Id" formaction="~/administration/changegame">save</button>
                                                 </td>
                                             </form>
                                             <td class="brettpit-admin-table-deletecol">

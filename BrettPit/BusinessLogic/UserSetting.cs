@@ -77,6 +77,25 @@ namespace BrettPit.BusinessLogic
             return dbUsers.ToList();
         }
 
+        public static List<UserModel> GetAll()
+        {
+            IEnumerable<UserModel> dbUsers;
+            using (var db = new DataAccessContext())
+            {
+                dbUsers = db.users.ToList().Select(user => new UserModel
+                {
+                    Id = user.id,
+                    UserName = user.name,
+                    Password = user.password,
+                    Email = user.email,
+                    IsAdmin = user.isadmin,
+                    LoginGuid = Guid.Parse(user.loginid)
+                });
+            }
+
+            return dbUsers.ToList();
+        }
+
         public static bool Save(UserModel user)
         {
             bool result;
@@ -208,6 +227,8 @@ namespace BrettPit.BusinessLogic
                     var userRecord = userDb.users.Find(userid);
                     if (userRecord != null)
                     {
+                        if (userRecord.email != NewUseremail)
+                            CreateEmailChangeLog(userRecord.email, NewUseremail);
                         userRecord.name = NewUsername;
                         userRecord.email = NewUseremail;
                         userDb.Entry(userRecord).State = System.Data.Entity.EntityState.Modified;
@@ -226,6 +247,11 @@ namespace BrettPit.BusinessLogic
                 result = false;
             }
             return result;
+        }
+
+        private static void CreateEmailChangeLog(string email, string newUseremail)
+        {
+            //email change logging here
         }
 
         public static bool ChangePassword(int userid, string NewPassword)
@@ -254,6 +280,56 @@ namespace BrettPit.BusinessLogic
             {
                 //TODO: Log exception to log
                 result = false;
+            }
+
+            return result;
+        }
+
+        public static bool ChangeAdminState(int userid, int adminid)
+        {
+            bool result;
+            string oldstate = "";
+            string newstate = "";
+
+            try
+            {
+                using (var userDb = new DataAccessContext())
+                {
+                    var userRecord = userDb.users.Find(userid);
+                    if (userRecord != null)
+                    {
+                        oldstate = userRecord.isadmin.ToString();
+                        userRecord.isadmin = !userRecord.isadmin;
+                        userDb.Entry(userRecord).State = System.Data.Entity.EntityState.Modified;
+                        userDb.SaveChanges();
+                        newstate = userRecord.isadmin.ToString();
+                        result = true;
+                    }
+                    else
+                    {
+                        result = false;
+                    }
+                }
+            }
+            catch (Exception)
+            {
+                //TODO: Log exception to log
+                result = false;
+            }
+            finally
+            {
+                using (var LogDb = new DataAccessContext())
+                {
+                    var logentry = new log_admin();
+                    logentry.timestamp = DateTime.Now;
+                    logentry.uid_affected = userid;
+                    logentry.uid_performed = adminid;
+                    logentry.changed_from = oldstate;
+                    logentry.changed_to = newstate;
+
+                    LogDb.log_admin.Add(logentry);
+                    LogDb.SaveChanges();
+                }
             }
 
             return result;

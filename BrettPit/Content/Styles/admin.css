@@ -67,3 +67,41 @@
 .brettpit-button-admin-addgame{
     width: 100%;
 }
+
+.brettpit-admin-users-table {
+    border: 1px solid #575756;
+    border-spacing: 0px;
+    width: 400px;
+}
+
+.brettpit-admin-users-table table {
+    border-spacing: 1px;
+}
+
+.brettpit-user {
+    text-align: left;
+    width: 200px;
+    /*padding: 0 0 10px 10px;*/
+    /*border: 1px;*/
+}
+
+.brettpit-isadmin {
+    width: 30px;
+    /*padding: 0 10px 10px 0;*/
+    text-align: center;
+    /*border: 1px;*/
+}
+
+.brettpit-delete{
+    text-align: center;
+    /*width: 100%;*/
+    /*padding: 0 0 10px 10px;*/
+    /*border: 1px;*/
+}
+
+.brettpit-resetpw{
+    text-align: center;
+    /*width: 100px;*/
+    /*padding: 0 0 10px 10px;*/
+    /*border: 1px;*/
+}

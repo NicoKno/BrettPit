@@ -1,0 +1,31 @@
+﻿@inherits Nancy.ViewEngines.Razor.NancyRazorViewBase<dynamic>
+<table>
+    <tr border="1">
+        <th class="brettpit-user">User</th>
+        <th class="brettpit-isadmin">Admin</th>
+        <th class="brettpit-delete">Delete</th>
+        <th class="brettpit-resetpw">Reset Pwd</th>
+    </tr>
+    @foreach (var item in Model.Users)
+    {
+        <tr>
+            <td class="brettpit-user" borde="1">@item.UserName</td>
+            <td class="brettpit-isadmin">
+                <form method="post" action="~/administration/changeadmin">
+                    <input type="text" hidden value="@item.Id" name="chAdmStateUid"/>
+                    <input class="brettpit-checkbox-admin-users" name="IsAdmin" type="checkbox"  checked="@item.IsAdmin" onChange="this.form.submit()" />
+                </form>
+            </td>
+            <td class="brettpit-delete">
+                <form method="post" action="">
+                    <button class="brettpit-button-admin-delete" name="DeleteUser" type="submit" value="@item.Id" formaction="~/administration/deleteuser" onclick="return confirm('Are you sure?')">delete</button>
+                </form>
+            </td>
+            <td class="brettpit-resetpw">
+                <form method="post" action="">
+                    <button class="brettpit-button-admin-change" name="ResetPw" type="submit" value="@item.Id" formaction="~/administration/resetpw" onclick="return confirm('Are you sure?')">reset</button>
+                </form>
+            </td>
+        </tr>
+    }
+</table>
