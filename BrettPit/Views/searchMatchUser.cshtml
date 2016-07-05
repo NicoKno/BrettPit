@@ -1,0 +1,19 @@
+﻿@inherits Nancy.ViewEngines.Razor.NancyRazorViewBase<dynamic>
+<table>
+    <tr>
+        <th class="brettpit-select-column">Select</th>
+        <th class="brettpit-player-column">Player</th>
+    </tr>
+    @foreach (var item in Model.MatchUsers)
+    {
+        <tr>
+            <td class="brettpit-select-column">
+                <input value="@item.Id" name="player" type="radio" />
+            </td>
+            <td class="brettpit-player-column">
+                @item.UserName
+            </td>
+        </tr>
+    }
+</table>
+

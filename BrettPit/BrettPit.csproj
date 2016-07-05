@@ -158,6 +158,7 @@
     <Content Include="Views\admin.cshtml" />
     <Content Include="Views\searchUser.cshtml" />
     <Content Include="Views\searchGame.cshtml" />
+    <Content Include="Views\searchMatchUser.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -186,6 +187,24 @@
     <Compile Include="Controller\AdminController.cs" />
     <Compile Include="Controller\ResetPwController.cs" />
     <Compile Include="Controller\UserController.cs" />
+    <Compile Include="DataAccess\eloes.cs">
+      <DependentUpon>DataAccessModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataAccess\game_systems.cs">
+      <DependentUpon>DataAccessModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataAccess\log_admin.cs">
+      <DependentUpon>DataAccessModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataAccess\log_pwchange.cs">
+      <DependentUpon>DataAccessModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataAccess\pairings.cs">
+      <DependentUpon>DataAccessModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DataAccess\users.cs">
+      <DependentUpon>DataAccessModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\MatchModel.cs" />
     <Compile Include="BusinessLogic\MatchSetting.cs" />
     <Compile Include="Models\GameModel.cs" />
@@ -208,29 +227,11 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>DataAccessModel.edmx</DependentUpon>
     </Compile>
-    <Compile Include="DataAccess\eloes.cs">
-      <DependentUpon>DataAccessModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="DataAccess\game_systems.cs">
-      <DependentUpon>DataAccessModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="DataAccess\log_admin.cs">
-      <DependentUpon>DataAccessModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="DataAccess\log_pwchange.cs">
-      <DependentUpon>DataAccessModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="DataAccess\pairings.cs">
-      <DependentUpon>DataAccessModel.tt</DependentUpon>
-    </Compile>
     <Compile Include="Models\MatchUserResultModel.cs" />
     <Compile Include="Models\UserModel.cs" />
     <Compile Include="Models\UserScoreModel.cs" />
     <Compile Include="NancyBootstrapper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="DataAccess\users.cs">
-      <DependentUpon>DataAccessModel.tt</DependentUpon>
-    </Compile>
     <Compile Include="UserMapper.cs" />
   </ItemGroup>
   <ItemGroup>

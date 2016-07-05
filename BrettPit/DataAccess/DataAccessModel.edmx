@@ -7,8 +7,9 @@
     <Schema Namespace="BrettPit.DataAccess.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="eloes">
           <Key>
-            <PropertyRef Name="uid" />
+            <PropertyRef Name="id" />
           </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="uid" Type="int" Nullable="false" />
           <Property Name="gid" Type="int" Nullable="false" />
           <Property Name="elo" Type="int" Nullable="false" />
@@ -82,7 +83,7 @@
         </Association>
         <Association Name="FK__elo__uid__1CF15040">
           <End Role="users" Type="Self.users" Multiplicity="1" />
-          <End Role="eloes" Type="Self.eloes" Multiplicity="0..1" />
+          <End Role="eloes" Type="Self.eloes" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="users">
               <PropertyRef Name="id" />
@@ -226,13 +227,14 @@
       <Schema Namespace="BrettPit.DataAccess" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
         <EntityType Name="eloes">
           <Key>
-            <PropertyRef Name="uid" />
+            <PropertyRef Name="id" />
           </Key>
           <Property Name="uid" Type="Int32" Nullable="false" />
           <Property Name="gid" Type="Int32" Nullable="false" />
           <Property Name="elo" Type="Int32" Nullable="false" />
           <NavigationProperty Name="game_systems" Relationship="Self.FK__elo__gid__1DE57479" FromRole="eloes" ToRole="game_systems" />
           <NavigationProperty Name="users" Relationship="Self.FK__elo__uid__1CF15040" FromRole="eloes" ToRole="users" />
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
         </EntityType>
         <EntityType Name="game_systems">
           <Key>
@@ -319,7 +321,7 @@
         </Association>
         <Association Name="FK__elo__uid__1CF15040">
           <End Role="users" Type="Self.users" Multiplicity="1" />
-          <End Role="eloes" Type="Self.eloes" Multiplicity="0..1" />
+          <End Role="eloes" Type="Self.eloes" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="users">
               <PropertyRef Name="id" />
@@ -466,6 +468,7 @@
           <EntitySetMapping Name="eloes">
             <EntityTypeMapping TypeName="BrettPit.DataAccess.eloes">
               <MappingFragment StoreEntitySet="eloes">
+                <ScalarProperty Name="id" ColumnName="id" />
                 <ScalarProperty Name="uid" ColumnName="uid" />
                 <ScalarProperty Name="gid" ColumnName="gid" />
                 <ScalarProperty Name="elo" ColumnName="elo" />

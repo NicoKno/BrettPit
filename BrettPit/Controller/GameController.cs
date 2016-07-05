@@ -18,9 +18,21 @@ namespace BrettPit.Controller
             Get["/"] = GetGamesView;
             Get["/{id}"] = GetSpecificGameView;
             Get["/{id}/search"] = GetSearchView;
+            Get["/{id}/searchMatchUser"] = GetMatchUserView;
             Get["/{id}/matches/{matchid}/accept"] = AcceptMatch;
             Get["/{id}/matches/{matchid}/decline"] = DeclineMatch;
             Post["/{id}/matches/"] = AddPlayerMatch;
+        }
+
+        private dynamic GetMatchUserView(dynamic arg)
+        {
+            var searchTerm = (string)Request.Query.searchTerm ?? string.Empty;
+            dynamic model = new ExpandoObject();
+            var currentUser = (UserModel) Context.CurrentUser;
+
+            model.MatchUsers = UserSetting.All().Where(user => user.Id != currentUser.Id).Where(user => user.UserName.IndexOf(searchTerm, StringComparison.CurrentCultureIgnoreCase) > -1).ToList();
+
+            return View["searchMatchUser", model];
         }
 
         private dynamic AddPlayerMatch(dynamic arg)
@@ -99,8 +111,6 @@ namespace BrettPit.Controller
             }
 
             model.Matches = MatchSetting.GetMatches(gameId, currentUser.Id);
-
-            model.MatchUsers = UserSetting.All().Where(user => user.Id != currentUser.Id).ToList();
 
             //User Information for Navigation
             model.Username = currentUser.UserName;
