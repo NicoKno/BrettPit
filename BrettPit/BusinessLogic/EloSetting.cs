@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Data.Entity;
 using System.Linq;
 using BrettPit.DataAccess;
 
@@ -7,46 +6,43 @@ namespace BrettPit.BusinessLogic
 {
     public class EloSetting
     {
-        public static void RecalcRatings(int userId, int opponentId, int result, int gameId)
+        public static void RecalcRatings(int playerOneId, int playerTwoId, int result, int gameId)
         {
             using (var db = new DataAccessContext())
             {
-                var player = db.eloes.Single(dbUser => dbUser.uid == userId && dbUser.gid == gameId);
-                var opponent = db.eloes.Single(dbUser => dbUser.uid == opponentId && dbUser.gid == gameId);
+                var playerOne = db.eloes.Single(dbUser => dbUser.uid == playerOneId && dbUser.gid == gameId);
+                var playerTwo = db.eloes.Single(dbUser => dbUser.uid == playerTwoId && dbUser.gid == gameId);
 
-                var playerElo = player.elo;
-                var opponentElo = opponent.elo;
+                var playerOneElo = playerOne.elo;
+                var playerTwoElo = playerTwo.elo;
 
-                var playerResult = 0.0;
-                var opponentResult = 0.0;
+                var playerOneResult = 0.0;
+                var playerTwoResult = 0.0;
 
                 switch (result)
                 {
                     case 0:
-                        playerResult = 0.5;
-                        opponentResult = 0.5;
+                        playerOneResult = 0.5;
+                        playerTwoResult = 0.5;
                         break;
                     case 1:
-                        playerResult = 1.0;
-                        opponentResult = 0.0;
+                        playerOneResult = 1.0;
+                        playerTwoResult = 0.0;
                         break;
                     case 2:
-                        playerResult = 0.0;
-                        opponentResult = 1.0;
+                        playerOneResult = 0.0;
+                        playerTwoResult = 1.0;
                         break;
                 }
 
-                var playerEa = 1 / (1 + Math.Pow(10, (opponentElo - playerElo) / 400.0) );
-                var newPlayerElo = playerElo + 20 * (playerResult - playerEa);
+                var playerOneEa = 1 / (1 + Math.Pow(10, (playerTwoElo - playerOneElo) / 400.0) );
+                var newPlayerOneElo = playerOneElo + 20 * (playerOneResult - playerOneEa);
 
-                var opponentEa = 1 / (1 + Math.Pow(10, (playerElo - opponentElo) / 400.0) );
-                var newOpponentElo = opponentElo + 20 * (opponentResult - opponentEa);
+                var playerTwoEa = 1 / (1 + Math.Pow(10, (playerOneElo - playerTwoElo) / 400.0) );
+                var newPlayerTwoElo = playerTwoElo + 20 * (playerTwoResult - playerTwoEa);
 
-                player.elo = (int)Math.Round(newPlayerElo, MidpointRounding.AwayFromZero);
-                opponent.elo = (int) Math.Round(newOpponentElo, MidpointRounding.AwayFromZero);
-
-                db.Entry(player).State = EntityState.Modified;
-                db.Entry(opponent).State = EntityState.Modified;
+                playerOne.elo = (int)Math.Round(newPlayerOneElo, MidpointRounding.AwayFromZero);
+                playerTwo.elo = (int) Math.Round(newPlayerTwoElo, MidpointRounding.AwayFromZero);
 
                 db.SaveChanges();
             }
