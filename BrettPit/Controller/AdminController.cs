@@ -57,8 +57,6 @@ namespace BrettPit.Controller
 
         private dynamic AdminDelUser(dynamic arg)
         {
-            //delete user
-            UserSetting.DeleteAccount((int)Request.Form.DeleteUser);
 
             //refresh view
             dynamic model = new ExpandoObject();
@@ -76,12 +74,20 @@ namespace BrettPit.Controller
             //has the user admin rights?
             if (currentUser.IsAdmin)
             {
+                //delete user
+                var UserToDelete = (int)Request.Form.DeleteUser;
+                UserSetting.DeleteAccount(UserToDelete);
                 //get all users
                 model.AllUsers = UserSetting.All();
                 //get all games
                 model.AllGames = GamesSetting.GetAll();
                 //permission
                 model.permission = true;
+                if(UserToDelete == currentUser.Id)
+                {
+                    model.permission = false;
+                    return Context.GetRedirect("~/logout");
+                }
             }
             else
                 model.permission = false;
@@ -90,9 +96,6 @@ namespace BrettPit.Controller
 
         private dynamic AdminResetPw(dynamic arg)
         {
-            //resetpw
-            UserSetting.ResetPassword((int)Request.Form.ResetPw);
-
             //refresh view
             dynamic model = new ExpandoObject();
             model.Errored = Request.Query.error.HasValue;
@@ -109,6 +112,9 @@ namespace BrettPit.Controller
             //has the user admin rights?
             if (currentUser.IsAdmin)
             {
+                //resetpw
+                UserSetting.ResetPassword((int)Request.Form.ResetPw);
+
                 //get all users
                 model.AllUsers = UserSetting.All();
                 //get all games
@@ -123,9 +129,6 @@ namespace BrettPit.Controller
 
         private dynamic AdminDelGame(dynamic arg)
         {
-            //delete game
-            GameSetting.DeleteGame((int)Request.Form.DeleteGame);
-
             //refresh view
             dynamic model = new ExpandoObject();
             model.Errored = Request.Query.error.HasValue;
@@ -142,6 +145,9 @@ namespace BrettPit.Controller
             //has the user admin rights?
             if (currentUser.IsAdmin)
             {
+                //delete game
+                GameSetting.DeleteGame((int)Request.Form.DeleteGame);
+
                 //get all users
                 model.AllUsers = UserSetting.All();
                 //get all games
@@ -156,9 +162,6 @@ namespace BrettPit.Controller
 
         private dynamic AdminAddGame(dynamic arg)
         {
-            //add game
-            GameSetting.AddGame((string)Request.Form.addGameName, (string)Request.Form.addGameDesc);
-
             //refresh view
             dynamic model = new ExpandoObject();
             model.Errored = Request.Query.error.HasValue;
@@ -175,6 +178,9 @@ namespace BrettPit.Controller
             //has the user admin rights?
             if (currentUser.IsAdmin)
             {
+                //add game
+                GameSetting.AddGame((string)Request.Form.addGameName, (string)Request.Form.addGameDesc);
+
                 //get all users
                 model.AllUsers = UserSetting.All();
                 //get all games
@@ -189,9 +195,6 @@ namespace BrettPit.Controller
 
         private dynamic AdminChangeGame(dynamic arg)
         {
-            //add game
-            GameSetting.ChangeGame((int)Request.Form.ChangeGame, (string)Request.Form.gamename, (string)Request.Form.gamedescription);
-
             //refresh view
             dynamic model = new ExpandoObject();
             model.Errored = Request.Query.error.HasValue;
@@ -208,6 +211,8 @@ namespace BrettPit.Controller
             //has the user admin rights?
             if (currentUser.IsAdmin)
             {
+                //change game
+                GameSetting.ChangeGame((int)Request.Form.ChangeGame, (string)Request.Form.gamename, (string)Request.Form.gamedescription);
                 //get all users
                 model.AllUsers = UserSetting.All();
                 //get all games
@@ -252,13 +257,21 @@ namespace BrettPit.Controller
             if (currentUser.IsAdmin)
             {
                 // change admin state
-                UserSetting.ChangeAdminState((int)Request.Form.chAdmStateUid, currentUser.Id);
+                var uidUserToChange = (int)Request.Form.chAdmStateUid;
+                UserSetting.ChangeAdminState(uidUserToChange, currentUser.Id);
                 //get all users
                 model.AllUsers = UserSetting.All();
                 //get all games
                 model.AllGames = GamesSetting.GetAll();
                 //permission
                 model.permission = true;
+
+                if(currentUser.Id == uidUserToChange)
+                {
+                    //affected account is the user himself
+                    model.permission = false;
+                    currentUser.IsAdmin = false;
+                }
             }
             else
                 model.permission = false;
