@@ -51,10 +51,9 @@ namespace BrettPit.Controller
 
             MatchSetting.ChangeMatchState(gameId, matchId, 1);
 
-            var currentUser = (UserModel) Context.CurrentUser;
             var match = MatchSetting.Get(matchId);
 
-            EloSetting.RecalcRatings(currentUser.Id, match.uid1, match.result, gameId);
+            EloSetting.RecalcRatings(match.uid1, match.uid2, match.result, gameId);
 
             return null;
         }

@@ -30,4 +30,7 @@ tr {
 
 .brettpit-game-name {
     font-weight: bold;
+    width: 150px;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }

@@ -17,8 +17,8 @@ namespace BrettPit.BusinessLogic
                     .Select(match => new {
                         Id = match.id,
                         Game = match.game_systems.name,
-                        Opponent = match.users.name,
-                        Player = match.users1.name,
+                        Opponent = match.uid2 == uid ? match.users.name : match.users1.name,
+                        Player = match.uid2 == uid ? match.users1.name : match.users.name,
                         Result = match.result,
                         Status1 = match.status1,
                         Date = match.timestamp,

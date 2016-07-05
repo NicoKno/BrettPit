@@ -27,12 +27,12 @@ namespace BrettPit.BusinessLogic
                         opponentResult = 0.5;
                         break;
                     case 1:
-                        playerResult = 0.0;
-                        opponentResult = 1.0;
-                        break;
-                    case 2:
                         playerResult = 1.0;
                         opponentResult = 0.0;
+                        break;
+                    case 2:
+                        playerResult = 0.0;
+                        opponentResult = 1.0;
                         break;
                 }
 

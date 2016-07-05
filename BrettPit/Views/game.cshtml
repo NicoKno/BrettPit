@@ -11,6 +11,8 @@
     @inherits Nancy.ViewEngines.Razor.NancyRazorViewBase<dynamic>
 
     <script>
+        var rootDir = "@Url.Content("~/")";
+
         window.onload = function () {
             //document.getElementById("brettpit-searchbox").focus();
             search();
@@ -25,7 +27,7 @@
 
             oldVal = searchTerm;
 
-            $.get("/games/@Model.GameId/search?searchTerm=" + searchTerm).done(function (data) {
+            $.get(rootDir + "games/@Model.GameId/search?searchTerm=" + searchTerm).done(function (data) {
                 $("#partialPlaceHolder").html(data);
             }).fail(function (error) {
                 console.log(error);
@@ -33,13 +35,13 @@
         }
 
         function accept(itemId) {
-            $.get("/games/@Model.GameId/matches/" + itemId + "/accept").done(function (data) {
+            $.get(rootDir + "games/@Model.GameId/matches/" + itemId + "/accept").done(function (data) {
                 window.location.reload(false);
             });
         }
 
         function decline(itemId) {
-            $.get("/games/@Model.GameId/matches/" + itemId + "/decline").done(function (data) {
+            $.get(rootDir + "games/@Model.GameId/matches/" + itemId + "/decline").done(function (data) {
                 window.location.reload(false);
             });
         }
@@ -66,7 +68,7 @@
             var selectedPlayer = $('input[name="player"]:checked').val();
             var selectedResult = $('input[name="result"]:checked').val();
 
-            $.post("/games/@Model.GameId/matches/", {
+            $.post(rootDir + "games/@Model.GameId/matches/", {
                 UserId: selectedPlayer,
                 Result: selectedResult
             }).done(function(data) {

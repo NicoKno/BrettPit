@@ -11,6 +11,8 @@
     @inherits Nancy.ViewEngines.Razor.NancyRazorViewBase<dynamic>
 
     <script>
+        var rootFolder = "@Url.Content("~/")";
+
         window.onload = function () {
             //document.getElementById("brettpit-searchbox").focus();
             search();
@@ -25,7 +27,7 @@
 
             oldVal = searchTerm;
 
-            $.get("/administration/searchUser?searchTerm=" + searchTerm).done(function (data) {
+            $.get(rootFolder + "administration/searchUser?searchTerm=" + searchTerm).done(function (data) {
                 $("#partialPlaceHolderUser").html(data);
             }).fail(function (error) {
                 console.log(error);
