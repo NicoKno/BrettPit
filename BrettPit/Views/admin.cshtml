@@ -44,13 +44,13 @@
                 @if (Model.permission)
                 {
                     <div class="brettpit-admin-usersbox">
-                        <input id="tbSearchUser" class="brettpit-textbox-admin-users" placeholder="search for user" type="text" onkeyup="search()" autocomplete="off" />
+                        <input id="tbSearchUser" class="brettpit-textbox-admin-users" placeholder="Search for user" type="text" onkeyup="search()" autocomplete="off" />
                         <div id="partialPlaceHolderUser" class="brettpit-admin-users-table"></div>
                     </div>
                     <div class="brettpit-admin-gamesbox">
-                        <input class="brettpit-textbox-admin-users" placeholder="search for games" type="search" />
+                        <input class="brettpit-textbox-admin-users" placeholder="Search for games" type="search" />
                         <div class="brettpit-admin-games-table">
-                            <table style="width:100%;" border="1" align="left">
+                            <table>
                                 <thead>
                                     <tr>
                                         <th>
@@ -79,12 +79,12 @@
                                                     <input name="gamedescription" value="@game.Description" class="brettpit-textbox-admin-games">
                                                 </td>
                                                 <td class="brettpit-admin-table-deletecol">
-                                                    <button class="brettpit-button-admin-change" name="ChangeGame" type="submit" value="@game.Id" formaction="~/administration/changegame">save</button>
+                                                    <button class="brettpit-button-admin-change" name="ChangeGame" type="submit" value="@game.Id" formaction="~/administration/changegame">Save</button>
                                                 </td>
                                             </form>
                                             <td class="brettpit-admin-table-deletecol">
                                                 <form method="post" action="">
-                                                    <button class="brettpit-button-admin-delete" name="DeleteGame" type="submit" value="@game.Id" formaction="~/administration/deletegame" onclick="return confirm('Are you sure?')">delete</button>
+                                                    <button class="brettpit-button-admin-delete" name="DeleteGame" type="submit" value="@game.Id" formaction="~/administration/deletegame" onclick="return confirm('Are you sure?')">Delete</button>
                                                 </form>
                                             </td>
                                         </tr>
@@ -92,10 +92,10 @@
                                     <tr>
                                         <form method="post" action="">
                                             <td>
-                                                <input class="brettpit-textbox-admin-games" name="addGameName" placeholder="new game">
+                                                <input class="brettpit-textbox-admin-games" name="addGameName" placeholder="New game">
                                             </td>
                                             <td>
-                                                <input class="brettpit-textbox-admin-games" name="addGameDesc" placeholder="description">
+                                                <input class="brettpit-textbox-admin-games" name="addGameDesc" placeholder="Description">
                                             </td>
                                             <td colspan="2">
                                                 <button id="Addgame" class="brettpit-button-admin-addgame" name="AddGame" type="submit" formaction="~/administration/addgame">Add</button>

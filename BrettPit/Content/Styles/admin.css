@@ -6,8 +6,8 @@
     float: left;
 }
 
-.brettpit-admin-gamesbox{
-    width: 440px;
+.brettpit-admin-gamesbox {
+    width: 502px;
     overflow-x: hidden;
     overflow-y: auto;
     float: right;
@@ -15,18 +15,26 @@
 
 .brettpit-admin-users-table{
     float: left;
-    height: 200px;
+    height: 300px;
     width: 440px;
     overflow-x: hidden;
     overflow-y: auto;
 }
 
-.brettpit-admin-games-table{
+.brettpit-admin-games-table {
     float: right;
-    height: 200px;
-    width: 440px;
+    height: 300px;
+    width: 500px;
     overflow-x: hidden;
     overflow-y: auto;
+    border: 1px solid #575756;
+    border-spacing: 0;
+}
+
+.brettpit-admin-games-table table {
+    width: 100%;
+    text-align: left;
+    border-spacing: 0;
 }
 
 .brettpit-label-admin-users {
@@ -36,17 +44,21 @@
 }
 
 .brettpit-button-admin-delete {
+    border: 1px solid #575756;
     padding: 2px;
     margin: auto;
     width: 100%;
-    background-color: red;
+    color: red;
+    background-color: #fff;
 }
 
 .brettpit-button-admin-change {
+    border: 1px solid #575756;
     padding: 2px;
     margin: auto;
     width: 100%;
-    background-color: yellow;
+    color: #4169e1;
+    background-color: #fff;
 }
 
 .brettpit-checkbox-admin-users {
@@ -62,9 +74,16 @@
 .brettpit-textbox-admin-games{
     width: 98%;
     border: hidden;
+    font-family: "Open Sans";
+    font-size: 15px;
+    color: #575756;
+    padding: 2px;
 }
 
 .brettpit-button-admin-addgame{
+    border: 1px solid #575756;
+    background-color: #fff;
+    padding: 2px;
     width: 100%;
 }
 
