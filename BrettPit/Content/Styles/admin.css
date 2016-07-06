@@ -29,6 +29,7 @@
     overflow-y: auto;
     border: 1px solid #575756;
     border-spacing: 0;
+    margin-top: 26px;
 }
 
 .brettpit-admin-games-table table {
