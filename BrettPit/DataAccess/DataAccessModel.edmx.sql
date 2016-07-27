@@ -2,13 +2,13 @@
 -- --------------------------------------------------
 -- Entity Designer DDL Script for SQL Server 2005, 2008, 2012 and Azure
 -- --------------------------------------------------
--- Date Created: 06/23/2016 21:27:25
--- Generated from EDMX file: C:\Users\Stephan Schuster\Source\Repos\BrettPit\BrettPit\DataAccess\DataAccessModel.edmx
+-- Date Created: 07/25/2016 12:57:25
+-- Generated from EDMX file: C:\src\BrettPit\BrettPit\BrettPit\DataAccess\DataAccessModel.edmx
 -- --------------------------------------------------
 
 SET QUOTED_IDENTIFIER OFF;
 GO
-USE [BrettPit];
+USE [DEV_BrettPit];
 GO
 IF SCHEMA_ID(N'dbo') IS NULL EXECUTE(N'CREATE SCHEMA [dbo]');
 GO
@@ -76,7 +76,8 @@ GO
 CREATE TABLE [dbo].[eloes] (
     [uid] int  NOT NULL,
     [gid] int  NOT NULL,
-    [elo] int  NOT NULL
+    [elo] int  NOT NULL,
+    [id] int IDENTITY(1,1) NOT NULL
 );
 GO
 
@@ -139,10 +140,10 @@ GO
 -- Creating all PRIMARY KEY constraints
 -- --------------------------------------------------
 
--- Creating primary key on [uid] in table 'eloes'
+-- Creating primary key on [id] in table 'eloes'
 ALTER TABLE [dbo].[eloes]
 ADD CONSTRAINT [PK_eloes]
-    PRIMARY KEY CLUSTERED ([uid] ASC);
+    PRIMARY KEY CLUSTERED ([id] ASC);
 GO
 
 -- Creating primary key on [id] in table 'game_systems'
@@ -201,6 +202,12 @@ ADD CONSTRAINT [FK__elo__uid__1CF15040]
     REFERENCES [dbo].[users]
         ([id])
     ON DELETE NO ACTION ON UPDATE NO ACTION;
+GO
+
+-- Creating non-clustered index for FOREIGN KEY 'FK__elo__uid__1CF15040'
+CREATE INDEX [IX_FK__elo__uid__1CF15040]
+ON [dbo].[eloes]
+    ([uid]);
 GO
 
 -- Creating foreign key on [game_system_id] in table 'pairings'

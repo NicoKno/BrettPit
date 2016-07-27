@@ -129,7 +129,7 @@ namespace BrettPit.Controller
             //all games
             var allGamesRecord = GamesSetting.GetAll();
 
-            if (allGamesRecord != null && allGamesRecord.Any())
+            if (allGamesRecord != null)
             {
                 model.allGames = allGamesRecord;
             }

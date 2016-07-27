@@ -1,18 +1,20 @@
 ﻿.brettpit-user-scores-area {
     float: left;
-    width: 700px;
+    width: 100%;
 }
 
 .brettpit-matches-area {
+    border: 1px solid #575756;
     float: left;
-    width: 700px;
+    width: 100%;
     margin-left: auto;
     margin-right: auto;
     margin-bottom: 30px;
+    overflow: scroll;
+    max-height: 500px
 }
 
 .brettpit-matches-area table {
-    border: 1px solid #575756;
     width: 100%;
 }
 
@@ -40,6 +42,8 @@
 .brettpit-user-table {
     border: 1px solid #575756;
     border-spacing: 0px;
+    overflow: scroll;
+    max-height: 500px
 }
 
 .brettpit-user-table table {
@@ -50,7 +54,7 @@
     padding-left: 5px;
     margin-top: 5px;
     margin-bottom: 10px;
-    width: 693px;
+    width: 300px;
 }
 
 .brettpit-action {
@@ -61,6 +65,7 @@
 
 .brettpit-accept-button {
     text-decoration: none;
+    cursor: pointer;
 }
 
 .brettpit-accept-button img {
@@ -69,6 +74,7 @@
 
 .brettpit-decline-button {
     text-decoration: none;
+    cursor: pointer;
 }
 
 .brettpit-decline-button img {
@@ -148,6 +154,8 @@
     border: 1px solid #575756;
     width: 100%;
     margin-bottom: 10px;
+    max-height: 500px;
+    overflow: scroll;
 }
 
 .brettpit-select-column {

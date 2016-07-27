@@ -9,10 +9,10 @@
           <Key>
             <PropertyRef Name="id" />
           </Key>
-          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="uid" Type="int" Nullable="false" />
           <Property Name="gid" Type="int" Nullable="false" />
           <Property Name="elo" Type="int" Nullable="false" />
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
         </EntityType>
         <EntityType Name="game_systems">
           <Key>
@@ -463,81 +463,80 @@
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
-      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
-        <EntityContainerMapping StorageEntityContainer="BrettPitDataAccessStoreContainer" CdmEntityContainer="DataAccessContext">
-          <EntitySetMapping Name="eloes">
-            <EntityTypeMapping TypeName="BrettPit.DataAccess.eloes">
-              <MappingFragment StoreEntitySet="eloes">
-                <ScalarProperty Name="id" ColumnName="id" />
-                <ScalarProperty Name="uid" ColumnName="uid" />
-                <ScalarProperty Name="gid" ColumnName="gid" />
-                <ScalarProperty Name="elo" ColumnName="elo" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="game_systems">
-            <EntityTypeMapping TypeName="BrettPit.DataAccess.game_systems">
-              <MappingFragment StoreEntitySet="game_systems">
-                <ScalarProperty Name="id" ColumnName="id" />
-                <ScalarProperty Name="name" ColumnName="name" />
-                <ScalarProperty Name="description" ColumnName="description" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="log_admin">
-            <EntityTypeMapping TypeName="BrettPit.DataAccess.log_admin">
-              <MappingFragment StoreEntitySet="log_admin">
-                <ScalarProperty Name="id" ColumnName="id" />
-                <ScalarProperty Name="timestamp" ColumnName="timestamp" />
-                <ScalarProperty Name="uid_affected" ColumnName="uid_affected" />
-                <ScalarProperty Name="uid_performed" ColumnName="uid_performed" />
-                <ScalarProperty Name="changed_from" ColumnName="changed_from" />
-                <ScalarProperty Name="changed_to" ColumnName="changed_to" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="log_pwchange">
-            <EntityTypeMapping TypeName="BrettPit.DataAccess.log_pwchange">
-              <MappingFragment StoreEntitySet="log_pwchange">
-                <ScalarProperty Name="id" ColumnName="id" />
-                <ScalarProperty Name="timestamp" ColumnName="timestamp" />
-                <ScalarProperty Name="uid_" ColumnName="uid_" />
-                <ScalarProperty Name="admin_id" ColumnName="admin_id" />
-                <ScalarProperty Name="pw_old" ColumnName="pw_old" />
-                <ScalarProperty Name="pw_new" ColumnName="pw_new" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="pairings">
-            <EntityTypeMapping TypeName="BrettPit.DataAccess.pairings">
-              <MappingFragment StoreEntitySet="pairings">
-                <ScalarProperty Name="id" ColumnName="id" />
-                <ScalarProperty Name="timestamp" ColumnName="timestamp" />
-                <ScalarProperty Name="uid1" ColumnName="uid1" />
-                <ScalarProperty Name="status1" ColumnName="status1" />
-                <ScalarProperty Name="uid2" ColumnName="uid2" />
-                <ScalarProperty Name="status2" ColumnName="status2" />
-                <ScalarProperty Name="game_system_id" ColumnName="game_system_id" />
-                <ScalarProperty Name="result" ColumnName="result" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="users">
-            <EntityTypeMapping TypeName="BrettPit.DataAccess.users">
-              <MappingFragment StoreEntitySet="users">
-                <ScalarProperty Name="loginid" ColumnName="loginid" />
-                <ScalarProperty Name="id" ColumnName="id" />
-                <ScalarProperty Name="name" ColumnName="name" />
-                <ScalarProperty Name="password" ColumnName="password" />
-                <ScalarProperty Name="email" ColumnName="email" />
-                <ScalarProperty Name="isadmin" ColumnName="isadmin" />
-                <ScalarProperty Name="last_login" ColumnName="last_login" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-        </EntityContainerMapping>
-      </Mapping>
-    </edmx:Mappings>
+    <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="BrettPitDataAccessStoreContainer" CdmEntityContainer="DataAccessContext">
+    <EntitySetMapping Name="eloes">
+      <EntityTypeMapping TypeName="IsTypeOf(BrettPit.DataAccess.eloes)">
+        <MappingFragment StoreEntitySet="eloes">
+          <ScalarProperty Name="id" ColumnName="id" />
+          <ScalarProperty Name="uid" ColumnName="uid" />
+          <ScalarProperty Name="gid" ColumnName="gid" />
+          <ScalarProperty Name="elo" ColumnName="elo" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="game_systems">
+      <EntityTypeMapping TypeName="IsTypeOf(BrettPit.DataAccess.game_systems)">
+        <MappingFragment StoreEntitySet="game_systems">
+          <ScalarProperty Name="id" ColumnName="id" />
+          <ScalarProperty Name="name" ColumnName="name" />
+          <ScalarProperty Name="description" ColumnName="description" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="log_admin">
+      <EntityTypeMapping TypeName="IsTypeOf(BrettPit.DataAccess.log_admin)">
+        <MappingFragment StoreEntitySet="log_admin">
+          <ScalarProperty Name="id" ColumnName="id" />
+          <ScalarProperty Name="timestamp" ColumnName="timestamp" />
+          <ScalarProperty Name="uid_affected" ColumnName="uid_affected" />
+          <ScalarProperty Name="uid_performed" ColumnName="uid_performed" />
+          <ScalarProperty Name="changed_from" ColumnName="changed_from" />
+          <ScalarProperty Name="changed_to" ColumnName="changed_to" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="log_pwchange">
+      <EntityTypeMapping TypeName="IsTypeOf(BrettPit.DataAccess.log_pwchange)">
+        <MappingFragment StoreEntitySet="log_pwchange">
+          <ScalarProperty Name="id" ColumnName="id" />
+          <ScalarProperty Name="timestamp" ColumnName="timestamp" />
+          <ScalarProperty Name="uid_" ColumnName="uid_" />
+          <ScalarProperty Name="admin_id" ColumnName="admin_id" />
+          <ScalarProperty Name="pw_old" ColumnName="pw_old" />
+          <ScalarProperty Name="pw_new" ColumnName="pw_new" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="pairings">
+      <EntityTypeMapping TypeName="IsTypeOf(BrettPit.DataAccess.pairings)">
+        <MappingFragment StoreEntitySet="pairings">
+          <ScalarProperty Name="id" ColumnName="id" />
+          <ScalarProperty Name="timestamp" ColumnName="timestamp" />
+          <ScalarProperty Name="uid1" ColumnName="uid1" />
+          <ScalarProperty Name="status1" ColumnName="status1" />
+          <ScalarProperty Name="uid2" ColumnName="uid2" />
+          <ScalarProperty Name="status2" ColumnName="status2" />
+          <ScalarProperty Name="game_system_id" ColumnName="game_system_id" />
+          <ScalarProperty Name="result" ColumnName="result" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="users">
+      <EntityTypeMapping TypeName="IsTypeOf(BrettPit.DataAccess.users)">
+        <MappingFragment StoreEntitySet="users">
+          <ScalarProperty Name="id" ColumnName="id" />
+          <ScalarProperty Name="name" ColumnName="name" />
+          <ScalarProperty Name="password" ColumnName="password" />
+          <ScalarProperty Name="email" ColumnName="email" />
+          <ScalarProperty Name="isadmin" ColumnName="isadmin" />
+          <ScalarProperty Name="last_login" ColumnName="last_login" />
+          <ScalarProperty Name="loginid" ColumnName="loginid" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping></edmx:Mappings>
   </edmx:Runtime>
   <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
   <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
@@ -551,7 +550,7 @@
         <DesignerProperty Name="ValidateOnBuild" Value="true" />
         <DesignerProperty Name="EnablePluralization" Value="false" />
         <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
-        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="UseLegacyProvider" Value="False" />
         <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
       </DesignerInfoPropertySet>
     </Options>

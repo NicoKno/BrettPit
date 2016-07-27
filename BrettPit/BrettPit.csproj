@@ -150,6 +150,7 @@
     <Content Include="Views\game.cshtml" />
     <Content Include="Views\resetpwd.cshtml" />
     <Content Include="Views\navigation.cshtml" />
+    <None Include="Properties\PublishProfiles\Folder.pubxml" />
     <None Include="Properties\PublishProfiles\IIS.pubxml" />
     <Content Include="Views\user.cshtml" />
     <Content Include="Content\Scripts\jquery-3.0.0.slim.min.map" />
